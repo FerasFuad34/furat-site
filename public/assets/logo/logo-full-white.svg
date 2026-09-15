@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 170" role="img" aria-label="الفرات الحلوة لتحلية المياه">
+  <defs>
+    <linearGradient id="lg-drop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#47D6D2"/>
+      <stop offset="42%" stop-color="#22A9C9"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <linearGradient id="lg-wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+    </linearGradient>
+    <clipPath id="lg-clip">
+      <path d="M64 8 C64 8 24 54 24 84 a40 40 0 0 0 80 0 C104 54 64 8 64 8 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- ===== الرمز ===== -->
+  <g transform="translate(474,20) scale(1.02)">
+    <path d="M64 8 C64 8 24 54 24 84 a40 40 0 0 0 80 0 C104 54 64 8 64 8 Z" fill="url(#lg-drop)"/>
+    <g clip-path="url(#lg-clip)">
+      <ellipse cx="42" cy="60" rx="9" ry="26" fill="#FFFFFF" opacity="0.16" transform="rotate(-18 42 60)"/>
+      <circle cx="46" cy="38" r="4" fill="#FFFFFF" opacity="0.3"/>
+      <path d="M20 95 q11 -8 22 0 t22 0 t22 0 t22 0" fill="none" stroke="url(#lg-wave)" stroke-width="6" stroke-linecap="round" opacity="0.95"/>
+      <path d="M20 82 q11 -8 22 0 t22 0 t22 0 t22 0" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+      <path d="M20 70 q11 -8 22 0 t22 0 t22 0 t22 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.28"/>
+      <circle cx="86" cy="58" r="4.5" fill="#FFFFFF" opacity="0.35"/>
+      <circle cx="94" cy="46" r="2.6" fill="#FFFFFF" opacity="0.25"/>
+    </g>
+    <circle cx="96" cy="98" r="13" fill="#E8A33D"/>
+    <circle cx="96" cy="98" r="13" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+    <circle cx="92" cy="94" r="3.4" fill="#FFFFFF" opacity="0.6"/>
+  </g>
+
+  <!-- ===== الاسم ===== -->
+  <text x="444" y="82" text-anchor="end" font-family="'Noto Kufi Arabic','Tajawal','Cairo','Segoe UI',Tahoma,sans-serif" font-size="48" font-weight="800" fill="#FFFFFF">الفرات الحلوة</text>
+  <text x="444" y="122" text-anchor="end" font-family="'Noto Kufi Arabic','Tajawal','Cairo','Segoe UI',Tahoma,sans-serif" font-size="24" font-weight="600" letter-spacing="0.5" fill="#9FD9EC">لتحلية المياه</text>
+
+  <!-- خط ذهبي فاصل -->
+  <rect x="120" y="138" width="324" height="4" rx="2" fill="#E8A33D" opacity="0.85"/>
+</svg>

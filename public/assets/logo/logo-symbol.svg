@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="شعار الفرات الحلوة">
+  <defs>
+    <linearGradient id="fg-drop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#47D6D2"/>
+      <stop offset="42%" stop-color="#22A9C9"/>
+      <stop offset="100%" stop-color="#073B57"/>
+    </linearGradient>
+    <linearGradient id="fg-wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+    </linearGradient>
+    <clipPath id="fg-clip">
+      <path d="M64 8 C64 8 24 54 24 84 a40 40 0 0 0 80 0 C104 54 64 8 64 8 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- قطرة الفرات -->
+  <path d="M64 8 C64 8 24 54 24 84 a40 40 0 0 0 80 0 C104 54 64 8 64 8 Z" fill="url(#fg-drop)"/>
+
+  <g clip-path="url(#fg-clip)">
+    <!-- لمعان القطرة -->
+    <ellipse cx="42" cy="60" rx="9" ry="26" fill="#FFFFFF" opacity="0.16" transform="rotate(-18 42 60)"/>
+    <circle cx="46" cy="38" r="4" fill="#FFFFFF" opacity="0.3"/>
+
+    <!-- موجات النهر: ثلاث موجات تصعد = ثلاث مراحل تنقية -->
+    <path d="M20 95 q11 -8 22 0 t22 0 t22 0 t22 0" fill="none" stroke="url(#fg-wave)" stroke-width="6" stroke-linecap="round" opacity="0.95"/>
+    <path d="M20 82 q11 -8 22 0 t22 0 t22 0 t22 0" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M20 70 q11 -8 22 0 t22 0 t22 0 t22 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.28"/>
+
+    <!-- فقاعات -->
+    <circle cx="86" cy="58" r="4.5" fill="#FFFFFF" opacity="0.35"/>
+    <circle cx="94" cy="46" r="2.6" fill="#FFFFFF" opacity="0.25"/>
+  </g>
+
+  <!-- نقطة العسل: الحلاوة -->
+  <circle cx="96" cy="98" r="13" fill="#E8A33D"/>
+  <circle cx="96" cy="98" r="13" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+  <circle cx="92" cy="94" r="3.4" fill="#FFFFFF" opacity="0.6"/>
+</svg>
