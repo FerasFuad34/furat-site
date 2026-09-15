@@ -131,6 +131,29 @@ a{color:var(--river)}
 .crow-none{border-inline-start:4px solid var(--line);border-radius:8px;opacity:.9}
 .btn-danger{color:#e5484d;border-color:rgba(229,72,77,.4)}
 .btn-danger:hover{background:#e5484d;color:#fff;border-color:#e5484d}
+
+/* مؤشر الحفظ التلقائي */
+.save-state{font-size:.8rem;color:var(--t2);align-self:center;min-width:100px;text-align:center;font-weight:700}
+/* تنبيه التذكيرات */
+.alert{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-radius:14px;padding:13px 16px;margin-bottom:14px;font-size:.92rem;border:1.5px solid;line-height:1.7}
+.alert[hidden]{display:none}
+.alert-over{background:#FFF1F0;border-color:#e5484d;color:#8f1d21}
+.alert-soon{background:#FFF8EC;border-color:#f5a623;color:#7a4c05}
+.alert .btn{margin-inline-start:auto}
+/* تحسينات الجوال */
+@media(max-width:640px){
+  .top{flex-direction:column;align-items:flex-start;gap:8px}
+  .acts{width:100%;justify-content:flex-start}
+  .btn{min-height:42px}
+  .btn-sm{min-height:38px}
+  input,select,textarea{font-size:16px!important;padding:11px 12px}
+  .crow{grid-template-columns:1fr!important;gap:8px;text-align:start}
+  .cacts{flex-wrap:wrap}
+  .cacts .btn,.cacts a{flex:1;justify-content:center}
+  .side nav a{padding:10px 13px;white-space:nowrap}
+  .modal-in{width:calc(100vw - 14px);max-height:92vh}
+  .stat{grid-template-columns:1fr 1fr!important}
+}
 </style>
 </head>
 <body>
@@ -150,7 +173,6 @@ a{color:var(--river)}
       <a data-t="faqs"><span>❓</span> الأسئلة الشائعة</a>
       <a data-t="cust"><span>👥</span> العملاء والتذكيرات<b class="nbadge" id="custBadge"></b></a>
       <a data-t="stats"><span>📈</span> إحصائيات الزيارات</a>
-      <a data-t="json"><span>🧬</span> المحرر المتقدم</a>
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">↗ عرض الموقع</a>
@@ -162,41 +184,19 @@ a{color:var(--river)}
     <div class="top">
       <div><h1 id="pageTitle">نظرة عامة</h1><p id="pageDesc">ملخص محتوى الموقع</p></div>
       <div class="acts">
+        <span class="save-state" id="saveState"></span>
         <button class="btn btn-ghost btn-sm" id="btnReload">↻ إعادة تحميل</button>
-        <button class="btn btn-ghost btn-sm" id="btnExport">⬇ تصدير JSON</button>
-        <button class="btn btn-ghost btn-sm" id="btnStandalone" title="ملف HTML واحد يفتح بدون سيرفر — يصلح للإرسال على واتساب">📦 نسخة مستقلة</button>
-        <button class="btn btn-gold btn-sm" id="btnSaveTop">💾 حفظ التغييرات</button>
       </div>
     </div>
 
     <!-- نظرة عامة -->
     <section class="pane on" data-p="dash">
+      <div class="alert" id="dueAlert" hidden></div>
       <div class="stat" id="stats"></div>
       <div class="card">
-        <h3>🛟 النسخ الاحتياطي والأمان</h3>
-        <div class="hint">كل تعديل تحفظه اللوحة يُنسخ <b>تلقائياً</b> إلى مستودع خاص سحابي منفصل عن السيرفر — ولو انطفى السيرفر أو أُعيد نشره، كل بياناتك ترجع وحدها عند التشغيل.</div>
-        <div id="bkStatus" class="hint" style="margin:8px 0"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-gold btn-sm" id="bkNow">💾 نسخة احتياطية الآن</button>
-          <button class="btn btn-ghost btn-sm" id="bkDown">⬇️ تنزيل نسخة (JSON)</button>
-          <button class="btn btn-ghost btn-sm" id="bkUp">⬆️ استعادة من ملف</button>
-          <input type="file" id="bkFile" accept=".json,application/json" style="display:none">
-        </div>
-      </div>
-      <div class="card">
-        <h3>✅ قائمة التحقق قبل تسليم الموقع للعميل</h3>
-        <div id="checklist"></div>
-      </div>
-      <div class="card">
-        <h3>💡 كيف تستخدم هذه اللوحة</h3>
-        <div class="hint">أي تعديل تعمله هنا <b>يظهر مباشرة في الموقع</b> بعد الحفظ — لا يحتاج إعادة نشر ولا كود.</div>
-        <ul style="padding-inline-start:20px;color:var(--t2);font-size:.9rem">
-          <li><b>المنتجات:</b> أضف/عدّل/احذف/كرر أي منتج، وغيّر السعر والخصم والمواصفات.</li>
-          <li><b>الصورة:</b> اترك حقل الصورة فارغاً وسيُرسم المنتج تلقائياً، أو ضع رابط/مسار صورة حقيقية.</li>
-          <li><b>بيانات الموقع:</b> رقم الواتساب هنا يتحكم في <b>كل</b> أزرار الطلب في الموقع — تأكد منه أولاً.</li>
-          <li><b>المحرر المتقدم:</b> يفتح ملف البيانات كاملاً للتعديل المباشر (احذر: خطأ في الصيغة يكسر الموقع).</li>
-          <li>يُنشأ ملف نسخ احتياطي تلقائياً <code>data.json.bak</code> مع كل حفظ.</li>
-        </ul>
+        <h3>🛟 النسخ الاحتياطي</h3>
+        <div id="bkStatus" class="hint"></div>
+        <div class="hint">كل تعديل <b>يُحفظ تلقائياً</b> في الموقع فوراً، وتُنسخ نسخة سحابية خاصة تلقائياً لحمايتها — بدون أي أزرار ولا خطوات.</div>
       </div>
     </section>
 
@@ -389,21 +389,8 @@ a{color:var(--river)}
       <div class="card"><h3>🔝 أكثر الصفحات مشاهدة</h3><div id="stTop"></div></div>
       <div class="hint" style="margin-top:10px">العدّاد داخلي بالكامل — ما فيه سكربتات تتبع خارجية تبطئ الموقع أو تشارك بيانات زوارك. الأرقام تتجمع من كل زيارة حقيقية لصفحات الموقع.</div>
     </section>
-    <section class="pane" data-p="json">
-      <div class="card">
-        <h3>🧬 المحرر المتقدم (JSON)</h3>
-        <div class="hint">⚠️ تعديل مباشر لملف البيانات. اضغط <b>تحقق من الصيغة</b> قبل الحفظ.</div>
-        <textarea id="jsonEd" style="width:100%;min-height:520px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;padding:14px;border-radius:12px;border:1.5px solid var(--line);direction:ltr;text-align:left" spellcheck="false"></textarea>
-        <div class="acts" style="margin-top:12px">
-          <button class="btn btn-ghost btn-sm" id="jsonCheck">✓ تحقق من الصيغة</button>
-          <button class="btn btn-gold btn-sm" id="jsonApply">تطبيق على النموذج</button>
-        </div>
-      </div>
-    </section>
   </main>
 </div>
-
-<button class="btn btn-gold btn-save" id="btnSave">💾 حفظ التغييرات</button>
 
 <!-- مودال المنتج -->
 <div class="modal" id="mP"><div class="modal-in">
@@ -494,7 +481,12 @@ const DAYAR={saturday:'السبت',sunday:'الأحد',monday:'الاثنين',t
 const ORDER=['saturday','sunday','monday','tuesday','wednesday','thursday','friday'];
 
 function toast(m,k){const t=$('#toast');t.textContent=m;t.className='toast on '+(k||'');setTimeout(()=>t.className='toast',2600);}
-function setDirty(v){dirty=v;$('#btnSave').classList.toggle('dirty',v);$('#btnSaveTop').textContent=v?'💾 حفظ التغييرات ●':'💾 حفظ التغييرات';}
+let saveTimer=null, saving=false;
+function setDirty(v){
+  dirty=v;
+  const st=$('#saveState');
+  if(v){ if(st)st.textContent='⏳ حفظ تلقائي…'; clearTimeout(saveTimer); saveTimer=setTimeout(()=>{if(dirty&&!saving)save(true);},1400); }
+}
 const get=(o,p)=>p.split('.').reduce((a,k)=>(a==null?a:a[k]),o);
 const set=(o,p,v)=>{const ks=p.split('.');const last=ks.pop();let t=o;ks.forEach(k=>{if(typeof t[k]!=='object'||t[k]===null)t[k]={};t=t[k];});t[last]=v;};
 
@@ -517,12 +509,11 @@ async function checkMeta(){
 }
 
 /* ---------- التبويبات ---------- */
-const TITLES={dash:['نظرة عامة','ملخص محتوى الموقع'],settings:['بيانات الموقع','الاسم والتواصل والأرقام'],hours:['أوقات العمل','تتحكم في حالة «مفتوح الآن»'],products:['المنتجات','أضف وعدّل الأسعار والمواصفات'],categories:['الأقسام','تصنيفات المنتجات'],services:['الخدمات','ما تقدمه للعملاء'],faqs:['الأسئلة الشائعة','إجابات جاهزة'],cust:['العملاء والتذكيرات','مواعيد تغيير الفلاتر لكل عميل — تلقائياً'],stats:['إحصائيات الزيارات','شو يشوف الناس وين — بيانات لتطوير قراراتك'],json:['المحرر المتقدم','تعديل مباشر على البيانات']};
+const TITLES={dash:['نظرة عامة','ملخص محتوى الموقع'],settings:['بيانات الموقع','الاسم والتواصل والأرقام'],hours:['أوقات العمل','تتحكم في حالة «مفتوح الآن»'],products:['المنتجات','أضف وعدّل الأسعار والمواصفات'],categories:['الأقسام','تصنيفات المنتجات'],services:['الخدمات','ما تقدمه للعملاء'],faqs:['الأسئلة الشائعة','إجابات جاهزة'],cust:['العملاء والتذكيرات','مواعيد تغيير الفلاتر لكل عميل — تلقائياً'],stats:['إحصائيات الزيارات','شو يشوف الناس وين — بيانات لتطوير قراراتك']};
 function tab(t){
   $$('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.t===t));
   $$('.pane').forEach(p=>p.classList.toggle('on',p.dataset.p===t));
   const x=TITLES[t]||['',''];$('#pageTitle').textContent=x[0];$('#pageDesc').textContent=x[1];
-  if(t==='json')$('#jsonEd').value=JSON.stringify(D,null,2);
   if(t==='dash')renderDash();
   if(t==='cust')renderCust();
   if(t==='stats')renderStats();
@@ -708,7 +699,7 @@ $('#addF').addEventListener('click',()=>{D.faqs.push({q:'سؤال جديد؟',a:
 
 /* ---------- نظرة عامة ---------- */
 function renderDash(){
-  ensureCust().then(ok=>{const el=$('#dashCust');if(el)el.textContent=ok?String((CUST.customers||[]).length):'0';renderBackup();});
+  ensureCust().then(ok=>{const el=$('#dashCust');if(el)el.textContent=ok?String((CUST.customers||[]).length):'0';renderBackup();if(ok)showDueAlert();});
   const s=D.settings;
   const priced=D.products.filter(p=>p.price>0).length;
   $('#stats').innerHTML=[
@@ -720,45 +711,48 @@ function renderDash(){
     ['👥','<span id="dashCust">…</span>','عميل بالسجل']
   ].map(([ic,n,l])=>`<div><b>${ic} ${n}</b><i>${l}</i></div>`).join('');
 
-  const wa=String(s.whatsapp||'').replace(/\D/g,'');
-  const checks=[
-    [wa.length>=11&&wa.startsWith('966'),'رقم الواتساب بصيغة دولية صحيحة ('+(s.whatsapp||'فارغ')+')'],
-    [String(s.phone||'').length>=9,'رقم الاتصال معبأ'],
-    [!!(s.address&&s.address.length>5),'العنوان معبأ'],
-    [!!(s.maps&&s.maps.includes('maps')),'رابط خرائط جوجل معبأ'],
-    [priced===D.products.length&&D.products.length>0,'كل المنتجات لها أسعار'],
-    [!(s.addressNote||'').includes('تجريبي')||(s.addressNote||'')==='','إزالة ملاحظة «تجريبي» من العنوان'],
-    [(s.crNumber&&s.crNumber!=='—')||true,'السجل التجاري (اختياري — حسب وضع المنشأة)'],
-    [D.faqs.length>=5,'خمسة أسئلة شائعة على الأقل']
-  ];
-  $('#checklist').innerHTML=checks.map(([ok,t])=>`<div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)">
-    <span style="flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;color:#fff;background:${ok?'#1FA463':'#E8A33D'}">${ok?'✓':'!'}</span>
-    <span style="font-size:.9rem;color:${ok?'var(--text)':'#8A5C10'}">${t}</span></div>`).join('');
+}
+function showDueAlert(){
+  const box=$('#dueAlert'); if(!box||!CUST)return;
+  const cyc=CUST.cycles||{pre:6,post:12,membrane:24};
+  let over=0,soon=0;
+  CUST.customers.forEach(c=>{const e=custEntries(c,cyc)[0]; if(!e)return; if(e.days<0)over++; else if(e.days<=30)soon++;});
+  if(!over&&!soon){box.hidden=true;return;}
+  box.hidden=false;
+  box.className='alert '+(over?'alert-over':'alert-soon');
+  box.innerHTML=(over?`🔴 <b>${over} عميل</b> تجاوزوا موعد تغيير الفلاتر — كلّمهم اليوم`:'')
+    +(over&&soon?' &nbsp;·&nbsp; ':'')
+    +(soon?`🟡 <b>${soon} عميل</b> موعد فلاترهم خلال 30 يوم`:'')
+    +'<button class="btn btn-gold btn-sm" id="dueGo">عرض القائمة</button>';
+  const g=$('#dueGo');
+  if(g)g.addEventListener('click',()=>{const a=document.querySelector('.side a[data-t="cust"]');if(a)a.click();});
+  try{
+    if(!sessionStorage.getItem('duePopped')){
+      sessionStorage.setItem('duePopped','1');
+      toast(over?`⏰ تنبيه: ${over} عميل فلاترهم متأخرة — شوف قسم العملاء`:`⏰ تنبيه: ${soon} عميل موعد فلاترهم قريب`,over?'bad':'ok');
+    }
+  }catch(e){}
 }
 
-/* ---------- JSON ---------- */
-$('#jsonCheck').addEventListener('click',()=>{try{JSON.parse($('#jsonEd').value);toast('الصيغة صحيحة ✓','ok');}catch(e){toast('خطأ: '+e.message,'bad');}});
-$('#jsonApply').addEventListener('click',()=>{try{D=JSON.parse($('#jsonEd').value);bindAll();setDirty(true);toast('تم التطبيق على النموذج','ok');}catch(e){toast('خطأ: '+e.message,'bad');}});
-
-/* ---------- حفظ / تصدير ---------- */
-async function save(){
-  const b=$('#btnSave'); b.disabled=true; b.textContent='⏳ جارٍ الحفظ…';
+/* ---------- حفظ تلقائي ---------- */
+async function save(auto){
+  if(saving)return; saving=true;
+  const st=$('#saveState'); if(st)st.textContent='⏳ جارٍ الحفظ…';
   try{
     const r=await fetch('/api/admin/save',{method:'POST',headers:Object.assign({'Content-Type':'application/json'},authHeaders()),body:JSON.stringify(D)});
     const j=await r.json();
     if(!r.ok||!j.ok)throw new Error(j.error||'فشل الحفظ');
-    setDirty(false); toast('تم الحفظ — الموقع تحدّث فوراً ✓','ok');
-  }catch(e){ toast('خطأ: '+e.message,'bad'); }
-  b.disabled=false; b.textContent='💾 حفظ التغييرات';
+    dirty=false;
+    if(st){st.textContent='✓ حُفظ تلقائياً';setTimeout(()=>{if(st&&!dirty)st.textContent='';},2600);}
+    if(!auto)toast('تم الحفظ ✓','ok');
+  }catch(e){
+    if(st)st.textContent='⚠️ إعادة المحاولة…';
+    toast('تعذّر الحفظ — بيحاول تلقائياً مرة ثانية','bad');
+    saving=false; setTimeout(()=>{if(dirty)save(true);},4000); return;
+  }
+  saving=false;
 }
-$('#btnSave').addEventListener('click',save);
-$('#btnSaveTop').addEventListener('click',save);
-$('#btnReload').addEventListener('click',()=>{if(!dirty||confirm('تجاهل التعديلات غير المحفوظة؟'))load();});
-$('#btnExport').addEventListener('click',()=>{
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([JSON.stringify(D,null,2)],{type:'application/json'}));
-  a.download='furat-data.json'; a.click(); toast('تم تصدير الملف','ok');
-});
+$('#btnReload').addEventListener('click',()=>load());
 /* ---------- رفع صور المنتجات ---------- */
 $('#f_upload').addEventListener('click',()=>$('#f_file').click());
 $('#f_file').addEventListener('change',async e=>{
@@ -795,7 +789,7 @@ function wireLogo(which,btnId,fileId,inputId,key){
       const r=await fetch('/api/admin/upload',{method:'POST',headers:authHeaders(),body:fd});
       const j=await r.json().catch(()=>({}));
       if(!r.ok||!j.ok)throw new Error(j.error||'فشل الرفع');
-      D.settings[key]=j.url; $(inputId).value=j.url; setDirty(true); logoPrev(which); toast('الشعار انرفع — اضغط حفظ التغييرات ✓','ok');
+      D.settings[key]=j.url; $(inputId).value=j.url; setDirty(true); logoPrev(which); toast('الشعار انرفع وحُفظ تلقائياً ✓','ok');
     }catch(err){toast('خطأ: '+err.message,'bad');}
     btn.disabled=false; btn.textContent='📷 ارفع'; e.target.value='';
   });
@@ -858,47 +852,10 @@ async function renderBackup(){
     if(r.status===401)return;
     const j=await r.json();
     el.innerHTML=j.active
-      ?('✅ النسخ التلقائي <b>شغال</b>'+(j.last?' — آخر نسخة مؤكدة: <b>'+new Date(j.last).toLocaleString('ar-SA')+'</b>':' — آخر نسخة: عند الإقلاع/أول حفظ'))
-      :'⚠️ النسخ السحابي معطّل — استخدم «تنزيل نسخة» واحتفظ بالملف عندك.';
+      ?('✅ النسخ الاحتياطي التلقائي <b>شغال</b>'+(j.last?' — آخر نسخة مؤكدة: <b>'+new Date(j.last).toLocaleString('ar-SA')+'</b>':' — آخر نسخة: عند أول حفظ'))
+      :'⚠️ النسخ السحابي معطّل حالياً — بياناتك محفوظة على السيرفر وحده.';
   }catch(e){el.textContent='تعذر جلب حالة النسخ الاحتياطي.';}
 }
-$('#bkNow').addEventListener('click',async()=>{
-  const b=$('#bkNow'); b.disabled=true; b.textContent='⏳ جاري النسخ…';
-  try{
-    const r=await fetch('/api/admin/backup',{method:'POST',headers:authHeaders()});
-    const j=await r.json().catch(()=>({}));
-    if(r.ok&&j.ok)toast('تمت نسخة احتياطية كاملة ✓','ok'); else toast('فشل النسخ: '+(j.error||''),'bad');
-  }catch(e){toast('فشل النسخ — تحقق من الاتصال','bad');}
-  b.disabled=false; b.textContent='💾 نسخة احتياطية الآن'; renderBackup();
-});
-$('#bkDown').addEventListener('click',async()=>{
-  await ensureCust();
-  const payload={exportedAt:new Date().toISOString(),site:'furat-alhalo',data:D,customers:CUST};
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}));
-  a.download='furat-backup-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),5000);
-  toast('نزّلت نسخة كاملة (موقع + عملاء)','ok');
-});
-$('#bkUp').addEventListener('click',()=>$('#bkFile').click());
-$('#bkFile').addEventListener('change',e=>{
-  const f=e.target.files&&e.target.files[0]; if(!f)return;
-  const rd=new FileReader();
-  rd.onload=async()=>{
-    let j; try{j=JSON.parse(rd.result);}catch(err){toast('الملف مو JSON صالح','bad');return;}
-    const hasData=j.data&&j.data.settings&&Array.isArray(j.data.products);
-    const hasCust=j.customers&&Array.isArray(j.customers.customers);
-    if(!hasData&&!hasCust){toast('الملف ما يحتوي نسخة صالحة (data/customers)','bad');return;}
-    if(!confirm('استعادة هذه النسخة باستبدال البيانات الحالية نهائياً\n('+(hasData?'بيانات الموقع ':'')+(hasCust?'سجل العملاء':'')+')\n\nمتأكد؟'))return;
-    const r=await fetch('/api/admin/restore',{method:'POST',headers:Object.assign({'Content-Type':'application/json'},authHeaders()),body:JSON.stringify({data:hasData?j.data:null,customers:hasCust?j.customers:null})});
-    const res=await r.json().catch(()=>({}));
-    if(r.ok&&res.ok){toast('تمت الاستعادة — جاري إعادة تحميل اللوحة…','ok');setTimeout(()=>location.reload(),900);}
-    else toast('فشلت الاستعادة: '+(res.error||''),'bad');
-    e.target.value='';
-  };
-  rd.readAsText(f);
-});
-
 /* ---------- العملاء والتذكيرات ---------- */
 const PART_AR={pre:'الشمعات الأولية',post:'الشمعة النهائية',membrane:'الممبرين'};
 const cesc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1077,26 +1034,10 @@ $('#btnPin').addEventListener('click',async()=>{
   }catch(e){toast('خطأ: '+e.message,'bad');}
   btn.disabled=false;
 });
-$('#btnStandalone').addEventListener('click',async()=>{
-  const btn=$('#btnStandalone'); const old=btn.textContent; btn.disabled=true; btn.textContent='⏳ جاري التجهيز…';
-  try{
-    const r=await fetch('/admin/export',{cache:'no-store',headers:authHeaders()});
-    if(r.status===401){toLogin();return;}
-    if(!r.ok)throw new Error('فشل التصدير');
-    const blob=await r.blob();
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);
-    a.download='furat-alhalw-website.html'; a.click();
-    setTimeout(()=>URL.revokeObjectURL(a.href),5000);
-    toast('تم تحميل النسخة المستقلة — ملف واحد يفتح بأي متصفح','ok');
-  }catch(e){toast('خطأ: '+e.message,'bad');}
-  btn.disabled=false; btn.textContent=old;
-});
 document.addEventListener('keydown',e=>{
-  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();save();}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();save(false);}
   if(e.key==='Escape')$('#mP').classList.remove('on');
 });
-window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
 
 load();
 })();

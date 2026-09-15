@@ -183,10 +183,12 @@ app.get('/api/data', (req, res) => res.json(R.D()));
 /* ---------- لوحة التحكم ---------- */
 app.get('/admin', (req, res) => {
   res.set('Cache-Control', 'no-store');
+  res.set('Cache-Control', 'no-store, must-revalidate');
   res.send(fs.readFileSync(path.join(__dirname, 'admin/index.html'), 'utf8'));
 });
 app.get('/admin/login', (req, res) => {
   res.set('Cache-Control', 'no-store');
+  res.set('Cache-Control', 'no-store, must-revalidate');
   res.send(fs.readFileSync(path.join(__dirname, 'admin/login.html'), 'utf8'));
 });
 
