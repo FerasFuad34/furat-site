@@ -1,0 +1,8 @@
+{
+  "cycles": {
+    "pre": 6,
+    "post": 12,
+    "membrane": 24
+  },
+  "customers": []
+}
