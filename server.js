@@ -98,7 +98,7 @@ app.get('/manifest.webmanifest', (req, res) => {
 
 app.get('/sw.js', (req, res) => {
   res.type('application/javascript').send(`
-const C='furat-v35';
+const C='furat-v36';
 self.addEventListener('install',e=>{self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{

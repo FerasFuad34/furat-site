@@ -203,7 +203,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 13 — 2026/9/22</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 14 — 2026/9/22</span>
     </div>
   </aside>
 
@@ -223,22 +223,18 @@ a{color:var(--river)}
       <div class="card">
         <h3>النسخ الاحتياطي</h3>
         <div id="bkStatus" class="hint"></div>
-        <div class="hint">كل تعديل <b>يُحفظ تلقائياً</b> في الموقع فوراً، وتُؤخذ لقطة احتياطية محلية داخل سيرفركم تلقائياً — <b>بدون أي خدمة خارجية</b>. وخزّنوا نسخة بجهازكم بين فترة وأخرى بالزر:</div>
-        <div class="acts" style="margin-top:10px"><button class="btn btn-ghost btn-sm" id="bkDownload">تنزيل نسخة كاملة لجهازي</button> <button class="btn btn-ghost btn-sm" id="bkRestore">استرجاع من نسخة محفوظة</button><input type="file" id="bkFile" accept=".json,application/json" hidden></div>
-        <div class="hint" style="margin-top:8px">ملف النسخة <b>تقني</b> مثل المفتاح الاحتياطي: شكله أكواد وهذا <b>طبيعي</b> — خزّنه بجهازك ولا تفتحه. ولو احتجته يومًا: زر «استرجاع» يعيد الموقع كله منه.</div>
-      </div>
+                <div class="acts" style="margin-top:12px;display:flex;gap:9px;flex-wrap:wrap"><button class="btn btn-gold btn-sm" id="bkDownload">تنزيل نسخة لجهازي</button><button class="btn btn-ghost btn-sm" id="bkRestore">استرجاع من نسخة</button><input type="file" id="bkFile" accept=".json,application/json" hidden></div>
+              </div>
     </section>
 
     <!-- الإعدادات -->
     <section class="pane" data-p="settings">
       <div class="card" id="pinWarn" style="border:2px solid #E05B4C;background:#FFF4F2">
         <h3>غيّر رمز الدخول قبل الإطلاق</h3>
-        <div class="hint">الموقع لسه يستخدم الرمز الافتراضي <b>1234</b> — أي واحد يعرفه يقدر يعدّل محتوى الموقع. غيّره الحين من الأسفل.</div>
-      </div>
+              </div>
       <div class="card">
         <h3>رمز دخول اللوحة</h3>
-        <div class="hint">اختر رمز من 4 إلى 8 أرقام تحفظه أنت — تستخدمه كل مرة تفتح اللوحة.</div>
-        <div class="grid2">
+                <div class="grid2">
           <label class="f"><span>الرمز الجديد</span><input id="pinNew" type="password" inputmode="numeric" placeholder="••••" autocomplete="new-password"></label>
           <label class="f"><span>أعد كتابة الرمز</span><input id="pinNew2" type="password" inputmode="numeric" placeholder="••••" autocomplete="new-password"></label>
         </div>
@@ -258,8 +254,7 @@ a{color:var(--river)}
             <div id="prev_full" style="margin-top:8px"></div>
           </label>
         </div>
-        <div class="hint">يفضل PNG بخلفية شفافة — الرفع يُحفظ تلقائياً. للرجوع للشعار الافتراضي اضغط «رجوع للافتراضي» بجانب المعاينة.</div>
-      </div>
+              </div>
       <div class="card">
         <h3>الهوية والتواصل</h3>
         <div class="grid2">
@@ -317,16 +312,14 @@ a{color:var(--river)}
           <label class="f"><span>فيسبوك</span><input data-s="social.facebook"></label>
           <label class="f"><span>واتساب أعمال</span><input data-s="social.whatsapp"></label>
         </div>
-        <div class="hint">الحساب الفارغ لا يظهر في الموقع تلقائياً.</div>
-      </div>
+              </div>
     </section>
 
     <!-- أوقات العمل -->
     <section class="pane" data-p="hours">
       <div class="card">
         <h3>أوقات العمل</h3>
-        <div class="hint">الموقع يعرض حالة «<b>مفتوح الآن / مغلق</b>» في الأعلى بناءً على هذه الأوقات، وتظهر في الفوتر وصفحة التواصل.</div>
-        <div class="scroll"><table class="tbl" id="hoursTbl">
+                <div class="scroll"><table class="tbl" id="hoursTbl">
           <thead><tr><th>اليوم</th><th>يبدأ</th><th>ينتهي</th><th>مغلق؟</th></tr></thead>
           <tbody></tbody>
         </table></div>
@@ -360,8 +353,7 @@ a{color:var(--river)}
         <h3>أقسام المنتجات</h3>
         <div class="acts" style="margin-bottom:14px"><button class="btn btn-gold btn-sm" id="addC">+ إضافة قسم</button></div>
         <div id="catsList"></div>
-        <div class="hint">الأيقونات المتاحة: <code>home</code> <code>cafe</code> <code>cooler</code> <code>part</code> <code>central</code> <code>drop</code> <code>shield</code> <code>lab</code> <code>tank</code> <code>gauge</code></div>
-      </div>
+              </div>
     </section>
 
     <!-- الخدمات -->
@@ -370,8 +362,7 @@ a{color:var(--river)}
         <h3>الخدمات</h3>
         <div class="acts" style="margin-bottom:14px"><button class="btn btn-gold btn-sm" id="addS">+ إضافة خدمة</button></div>
         <div id="srvList"></div>
-        <div class="hint">الأيقونات: <code>install</code> <code>wrench</code> <code>lab</code> <code>cafe</code> <code>tank</code> <code>move</code> <code>truck</code> <code>users</code> <code>medal</code> <code>shield</code></div>
-      </div>
+              </div>
     </section>
 
     <!-- الباقات -->
@@ -388,8 +379,7 @@ a{color:var(--river)}
       <div class="stat" id="custStats"></div>
       <div class="card">
         <h3>جدول العملاء <span class="badge b-mut" id="custCount"></span></h3>
-        <div class="hint">الاستحقاق يُحسب تلقائياً من تاريخ آخر تغيير لكل قطعة — المتأخر تظهر له <b>شارة حمراء</b> وتنبيه فوري.</div>
-        <div class="acts" style="margin-bottom:14px">
+                <div class="acts" style="margin-bottom:14px">
           <button class="btn btn-gold btn-sm" id="custAdd">+ إضافة عميل</button>
           <input id="custSearch" placeholder="ابحث بالاسم أو الجوال…" style="padding:9px 14px;border-radius:999px;border:1.5px solid var(--line);min-width:200px">
           <select id="custFilter" style="padding:9px 14px;border-radius:999px;border:1.5px solid var(--line)">
@@ -419,8 +409,7 @@ a{color:var(--river)}
       <div class="stat" id="stStats"></div>
       <div class="card"><h3>الزيارات آخر 14 يوم</h3><div id="stDays"></div></div>
       <div class="card"><h3>أكثر الصفحات مشاهدة</h3><div id="stTop"></div></div>
-      <div class="hint" style="margin-top:10px">العدّاد داخلي بالكامل — ما فيه سكربتات تتبع خارجية تبطئ الموقع أو تشارك بيانات زوارك. الأرقام تتجمع من كل زيارة حقيقية لصفحات الموقع.</div>
-    </section>
+          </section>
   </main>
 </div>
 
@@ -487,8 +476,7 @@ a{color:var(--river)}
       <label class="f"><span>آخر تغيير ممبرين</span><input id="cMem" type="date"></label>
     </div>
     <label class="f"><span>ملاحظات</span><textarea id="cNotes" rows="2" placeholder="عقد صيانة، وقت الاتصال المفضل…"></textarea></label>
-    <div class="hint" id="cycHint" style="margin-top:4px"></div>
-  </div>
+      </div>
   <div class="modal-foot"><button class="btn btn-ghost" data-cclose>إلغاء</button><button class="btn btn-gold" id="cSave">حفظ العميل</button></div>
 </div></div>
 
@@ -564,6 +552,7 @@ async function load(){
   if(!r.ok){toast('تعذر تحميل البيانات','bad');return;}
   D=await r.json();
   bindAll(); setDirty(false);
+  renderDash();
   checkMeta();
 }
 async function checkMeta(){
@@ -847,7 +836,7 @@ function logoPrev(which){
   const el=$('#prev_'+which); if(!el)return;
   el.innerHTML=url
     ?`<div style="display:flex;align-items:center;gap:10px"><img src="${url}" alt="معاينة" style="max-height:52px;max-width:150px;object-fit:contain;border:1px solid var(--line);border-radius:10px;padding:6px;${which==='full'?'background:#073B57;':'background:#fff;'}"><button type="button" class="btn btn-ghost btn-sm" data-logorm="${which}">رجوع للافتراضي</button></div>`
-    :`<div class="hint">مستخدم الآن: الشعار الافتراضي${which==='mark'?' الصغير':' الكامل'}</div>`;
+    :`<div class="hint">مستخدم: الشعار الافتراضي</div>`;
 }
 function wireLogo(which,btnId,fileId,inputId,key){
   $(btnId).addEventListener('click',()=>$(fileId).click());
@@ -890,7 +879,7 @@ function renderGal(){
         <button class="btn btn-ghost btn-xs2" data-gal="down" data-gi="${i}">أسفل</button>
         <button class="btn btn-ghost btn-xs2 btn-danger" data-gal="del" data-gi="${i}">حذف</button>
       </div>
-    </div>`).join(''):'<div class="hint" style="margin:2px 0 6px">لا توجد صور إضافية بعد — المعرض سيعرض الصورة الرئيسية وحدها (أو الرسم التوضيحي إذا ما فيه صورة).</div>';
+    </div>`).join(''):'<div class="hint" style="margin:2px 0 6px">لا صور إضافية بعد</div>';
 }
 $('#galAdd').addEventListener('click',()=>$('#galFile').click());
 $('#galFile').addEventListener('change',async e=>{
@@ -922,7 +911,7 @@ async function renderBackup(){
     const r=await fetch('/api/admin/backup',{cache:'no-store',headers:authHeaders()});
     if(r.status===401)return;
     const j=await r.json();
-    el.innerHTML=(j.mysql?'قاعدة البيانات: <b>MySQL داخل سيرفركم</b> — تحتفظ بكل شي عندها وحدها. ':'النسخ الاحتياطي التلقائي <b>شغال</b> — لقطات محلية داخل سيرفركم (آخر 7 لقطات) + نسخة .safe مع كل حفظ. ')+'نسخة أسبوعية لجهازكم بالزر بالأسفل.'+(j.last?' — آخر لقطة: <b>'+new Date(j.last).toLocaleString('ar-SA')+'</b>':'');
+    el.innerHTML=(j.mysql?'القاعدة: <b>MySQL</b>':'النسخ الاحتياطي: <b>شغال</b>')+(j.last?' — آخر لقطة: <b>'+new Date(j.last).toLocaleString('ar-SA')+'</b>':'');
   }catch(e){el.textContent='تعذر جلب حالة النسخ الاحتياطي.';}
 }
 $('#bkDownload')&&$('#bkDownload').addEventListener('click',async()=>{
@@ -957,7 +946,7 @@ async function renderStats(){
     const todayN=(byDay.find(([d])=>d===today)||[])[1]||0;
     $('#stStats').innerHTML=[[j.total||0,'زيارة إجمالية'],[todayN,'زيارة اليوم'],[(j.top||[]).length,'صفحة لها زيارات']].map(([numm,l])=>`<div><b>${numm}</b><i>${l}</i></div>`).join('');
     const maxD=Math.max(1,...byDay.map(([,v])=>v));
-    $('#stDays').innerHTML=byDay.length?byDay.map(([d,v])=>`<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px"><span style="width:82px;font-size:.78rem;color:var(--t2)">${d.slice(5)}</span><div style="flex:1;background:var(--bg);border-radius:6px;height:14px;overflow:hidden"><div style="width:${Math.round(v/maxD*100)}%;height:100%;background:linear-gradient(90deg,var(--river),var(--clear));border-radius:6px"></div></div><b style="font-size:.78rem;width:34px;text-align:end">${v}</b></div>`).join(''):'<div class="hint">لسه ما فيه زيارات مسجلة — اول ما ينزل الموقع على رابط دائم تبدأ العدادات.</div>';
+    $('#stDays').innerHTML=byDay.length?byDay.map(([d,v])=>`<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px"><span style="width:82px;font-size:.78rem;color:var(--t2)">${d.slice(5)}</span><div style="flex:1;background:var(--bg);border-radius:6px;height:14px;overflow:hidden"><div style="width:${Math.round(v/maxD*100)}%;height:100%;background:linear-gradient(90deg,var(--river),var(--clear));border-radius:6px"></div></div><b style="font-size:.78rem;width:34px;text-align:end">${v}</b></div>`).join(''):'<div class="hint">لا زيارات مسجلة بعد</div>';
     $('#stTop').innerHTML=(j.top||[]).length?j.top.map(t=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.86rem"><span style="direction:ltr">${cesc(t.path)}</span><b>${t.total}</b></div>`).join(''):'<div class="hint">لا بيانات بعد.</div>';
   }catch(e){$('#stStats').innerHTML='<div class="hint">خطأ بجلب الإحصائيات.</div>';}
 }
@@ -1042,7 +1031,7 @@ async function renderCust(){
         <button class="btn btn-ghost btn-xs2 btn-danger" data-cdel="${c.id}">حذف</button>
       </div></td>
     </tr>`;
-  }).join(''):`<tr><td colspan="7" style="text-align:center;color:var(--t2);padding:30px">${rows.length?'لا توجد نتائج مطابقة للبحث/الفلتر.':'ما فيه عملاء بعد — اضغط «+ إضافة عميل» وسجّل أول عميل، والتذكيرات تشتغل وحدها من تاريخه.'}</td></tr>`;
+  }).join(''):`<tr><td colspan="7" style="text-align:center;color:var(--t2);padding:30px">${rows.length?'لا توجد نتائج مطابقة للبحث/الفلتر.':'لا يوجد عملاء بعد'}</td></tr>`;
   const b=$('#custBadge'); if(b)b.textContent=over?String(over):'';
 }
 function openCustModal(id){
@@ -1055,7 +1044,7 @@ function openCustModal(id){
   $('#cPre').value=c&&c.parts?c.parts.pre||'':''; $('#cPost').value=c&&c.parts?c.parts.post||'':''; $('#cMem').value=c&&c.parts?c.parts.membrane||'':'';
   $('#cNotes').value=c?c.notes||'':'';
   const cy=(CUST&&CUST.cycles)||{pre:6,post:12,membrane:24};
-  $('#cycHint').textContent='المدة المعتمدة: الشمعات الأولية كل '+cy.pre+' شهر · النهائية كل '+cy.post+' شهر · الممبرين كل '+cy.membrane+' شهر — الاستحقاق يُحسب تلقائياً من تاريخ آخر تغيير، والأقسام تتلون أحمر/أصفر/أخضر.';
+
   $('#mC').classList.add('on');
 }
 $$('[data-cclose]').forEach(b=>b.addEventListener('click',()=>$('#mC').classList.remove('on')));
