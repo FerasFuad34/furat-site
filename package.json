@@ -1,15 +1,21 @@
 {
-  "name": "pptr",
+  "name": "furat-alhalw-site",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "description": "",
+  "license": "UNLICENSED",
+  "description": "موقع الفرات الحلو لتحلية المياه — الرياض",
   "dependencies": {
-    "puppeteer": "^24.43.1"
-  }
+    "express": "^5.2.1",
+    "multer": "^2.3.0",
+    "mysql2": "^3.24.4",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.35.4"
+  },
+  "private": true
 }
