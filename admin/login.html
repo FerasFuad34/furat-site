@@ -47,15 +47,6 @@ a{color:var(--honey)}
   var err = document.getElementById('errBox');
   var btn = document.getElementById('btn');
 
-  /* لو فيه توكن صالح مخزّن — ادخل على طول */
-  try {
-    var t = localStorage.getItem('fh_token');
-    if (t) {
-      fetch('/api/admin/meta', { headers: { 'x-fh-token': t }, cache: 'no-store' })
-        .then(function(r){ if (r.ok) location.replace('/admin'); })
-        .catch(function(){});
-    }
-  } catch(e){}
 
   f.addEventListener('submit', function(e){
     e.preventDefault();
@@ -69,8 +60,7 @@ a{color:var(--honey)}
     .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, j: j }; }); })
     .then(function(res){
       if (res.ok && res.j.token) {
-        try { localStorage.setItem('fh_token', res.j.token); } catch(e){}
-        location.href = '/admin';
+        location.href = '/admin?tok=' + encodeURIComponent(res.j.token);
       } else {
         err.classList.add('on');
         inp.value = ''; inp.focus();

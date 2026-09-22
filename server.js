@@ -56,9 +56,7 @@ const reqToken = req => {
   const h = req.headers['x-fh-token'] || req.headers['authorization'] || '';
   if (typeof h === 'string' && h) return h.startsWith('Bearer ') ? h.slice(7) : h;
   if (req.query && req.query.t) return String(req.query.t);
-  const raw = req.headers.cookie || '';
-  const m = raw.split(';').map(x => x.trim()).find(x => x.startsWith(COOKIE + '='));
-  return m ? decodeURIComponent(m.slice(COOKIE.length + 1)) : '';
+  return '';
 };
 const isAdmin = req => valid(reqToken(req));
 
@@ -218,7 +216,6 @@ app.post('/admin/login', (req, res) => {
   if (pin && hashPin(pin) === pinHash()) {
     loginAttempts.delete(ip);
     const t = token();
-    res.setHeader('Set-Cookie', `${COOKIE}=${encodeURIComponent(t)}; Path=/; Max-Age=43200; SameSite=Lax;${req.headers['x-forwarded-proto'] === 'https' ? ' Secure' : ''}`);
     return res.json({ ok: true, token: t });
   }
   a.n++; a.t = now; loginAttempts.set(ip, a);

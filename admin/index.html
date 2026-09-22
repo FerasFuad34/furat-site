@@ -204,7 +204,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 15 — 2026/9/22</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 16 — 2026/9/22</span>
     </div>
   </aside>
 
@@ -390,6 +390,7 @@ a{color:var(--river)}
             <option value="ok">سليمون</option>
           </select>
           <button class="btn btn-ghost btn-sm" id="custCsv">تصدير CSV (إكسل)</button>
+          <button class="btn btn-gold btn-sm" id="custPdf">تصدير PDF مصمم</button>
         </div>
         <div class="scroll"><table class="tbl" id="custTbl">
           <thead><tr><th>العميل</th><th>الجوال</th><th>العنوان</th><th>الجهاز / الفلتر</th><th>أقرب استحقاق</th><th>الحالة</th><th></th></tr></thead>
@@ -472,9 +473,9 @@ a{color:var(--river)}
       <label class="f"><span>العنوان / الحي</span><input id="cArea" placeholder="السويدي الغربي — شارع…"></label>
       <label class="f"><span>نوع الجهاز / الفلتر</span><input id="cDevice" placeholder="جهاز 7 مراحل فيتنامي…"></label>
       <label class="f"><span>تاريخ التركيب</span><input id="cInstall" type="date"></label>
-      <label class="f"><span>آخر تغيير شمعات أولية</span><input id="cPre" type="date"></label>
-      <label class="f"><span>آخر تغيير شمعة نهائية</span><input id="cPost" type="date"></label>
-      <label class="f"><span>آخر تغيير ممبرين</span><input id="cMem" type="date"></label>
+      <label class="f"><span>آخر تغيير شمعات أولية</span><div style="display:flex;gap:8px"><input id="cPre" type="date" style="flex:1;min-width:0"><input id="cPreT" type="time" style="width:104px;flex:none"></div></label>
+      <label class="f"><span>آخر تغيير شمعة نهائية</span><div style="display:flex;gap:8px"><input id="cPost" type="date" style="flex:1;min-width:0"><input id="cPostT" type="time" style="width:104px;flex:none"></div></label>
+      <label class="f"><span>آخر تغيير ممبرين</span><div style="display:flex;gap:8px"><input id="cMem" type="date" style="flex:1;min-width:0"><input id="cMemT" type="time" style="width:104px;flex:none"></div></label>
     </div>
     <label class="f"><span>ملاحظات</span><textarea id="cNotes" rows="2" placeholder="عقد صيانة، وقت الاتصال المفضل…"></textarea></label>
       </div>
@@ -535,13 +536,14 @@ let D=null, dirty=false, editId=null;
 
 /* ---------- المصادقة بالتوكن (تشتغل حتى لو الكوكيز محجوبة) ---------- */
 const AUTH_KEY='fh_token';
+let MEMT='';
 (function bootToken(){
   const q=new URLSearchParams(location.search), tk=q.get('tok');
-  if(tk){ try{localStorage.setItem(AUTH_KEY,tk);}catch(e){} history.replaceState(null,'',location.pathname); }
+  if(tk){ MEMT=tk; history.replaceState(null,'',location.pathname); }
 })();
-const getToken=()=>{ try{return localStorage.getItem(AUTH_KEY)||'';}catch(e){return '';} };
+const getToken=()=>MEMT;
 const authHeaders=()=>{ const t=getToken(); return t?{'x-fh-token':t}:{}; };
-function toLogin(){ try{localStorage.removeItem(AUTH_KEY);}catch(e){} location.href='/admin/login'; }
+function toLogin(){ MEMT=''; location.href='/admin/login'; }
 const DAYAR={saturday:'السبت',sunday:'الأحد',monday:'الاثنين',tuesday:'الثلاثاء',wednesday:'الأربعاء',thursday:'الخميس',friday:'الجمعة'};
 const ORDER=['saturday','sunday','monday','tuesday','wednesday','thursday','friday'];
 
@@ -798,8 +800,8 @@ function showDueAlert(){
   const g=$('#dueGo');
   if(g)g.addEventListener('click',()=>{const a=document.querySelector('.side a[data-t="cust"]');if(a)a.click();});
   try{
-    if(!sessionStorage.getItem('duePopped')){
-      sessionStorage.setItem('duePopped','1');
+    if(!duePoppedMem){
+      duePoppedMem=true;
       toast(over?`تنبيه: ${over} عميل فلاترهم متأخرة — شوف قسم العملاء`:`تنبيه: ${soon} عميل موعد فلاترهم قريب`,over?'bad':'ok');
     }
   }catch(e){}
@@ -967,8 +969,10 @@ const PART_AR={pre:'الشمعات الأولية',post:'الشمعة النها
 const cesc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let CUST=null, cEdit=null;
 const iso=d=>d.toISOString().slice(0,10);
-const addMonths=(ds,m)=>{const d=new Date(ds+'T00:00:00');d.setMonth(d.getMonth()+m);return d;};
-const daysUntil=ds=>Math.ceil((new Date(ds+'T00:00:00')-new Date(new Date().toDateString()))/86400000);
+const addMonths=(ds,m)=>{const d=new Date(String(ds).slice(0,10)+'T00:00:00');d.setMonth(d.getMonth()+m);return d;};
+const daysUntil=ds=>Math.ceil((new Date(String(ds).slice(0,10)+'T00:00:00')-new Date(new Date().toDateString()))/86400000);
+const normAr=s=>String(s).replace(/[\u064B-\u0652\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/\s+/g,'');
+let duePoppedMem=false;
 const holdOn=c=>c&&c.hold&&c.hold.until&&c.hold.until>=iso(new Date());
 let holdId=null;
 function setHoldDate(days){const d=new Date();d.setDate(d.getDate()+Number(days));$('#hUntil').value=iso(d);}
@@ -1023,9 +1027,9 @@ async function renderCust(){
     [mid,'استحقاق خلال 90 يوم']
   ].map(([num,l],ix)=>`<div${ix===1&&num?' class="st-over"':ix===2&&num?' class="st-soon"':''}><b>${num}</b><i>${l}</i></div>`).join('');
   const cc=$('#custCount'); if(cc)cc.textContent=rows.length?rows.length+' عميل':'';
-  const q=($('#custSearch').value||'').trim(), f=$('#custFilter').value;
+  const qRaw=($('#custSearch').value||'').trim(), q=normAr(qRaw), qd=qRaw.replace(/\D/g,''), f=$('#custFilter').value;
   let list=rows;
-  if(q)list=list.filter(r=>(r.c.name||'').includes(q)||(r.c.phone||'').includes(q));
+  if(q)list=list.filter(r=>normAr(r.c.name||'').includes(q)||(qd&&(r.c.phone||'').replace(/\D/g,'').includes(qd)));
   if(f==='over')list=list.filter(r=>r.e&&r.e.days<0);
   if(f==='soon')list=list.filter(r=>r.e&&r.e.days>=0&&r.e.days<=30);
   if(f==='ok')list=list.filter(r=>!r.e||r.e.days>30);
@@ -1053,17 +1057,20 @@ async function renderCust(){
         <button class="btn btn-ghost btn-xs2 btn-danger" data-cdel="${c.id}">حذف</button>
       </div></td>
     </tr>`;
-  }).join(''):`<tr><td colspan="7" style="text-align:center;color:var(--t2);padding:30px">${rows.length?'لا توجد نتائج مطابقة للبحث/الفلتر.':'لا يوجد عملاء بعد'}</td></tr>`;
+  }).join(''):`<tr><td colspan="7" style="text-align:center;color:var(--t2);padding:30px">${rows.length?(qRaw?'لا نتائج مطابقة لـ «'+cesc(qRaw)+'»':'لا توجد نتائج مطابقة للفلتر.'):'لا يوجد عملاء بعد'}</td></tr>`;
   const b=$('#custBadge'); if(b)b.textContent=over?String(over):'';
 }
 function openCustModal(id){
   cEdit=id;
   const c=id?CUST.customers.find(x=>x.id===id):null;
   $('#mCTitle').textContent=c?'تعديل عميل':'عميل جديد';
+  $('#cPreT').value=''; $('#cPostT').value=''; $('#cMemT').value='';
   $('#cName').value=c?c.name||'':''; $('#cPhone').value=c?c.phone||'':'';
   $('#cArea').value=c?c.area||'':''; $('#cDevice').value=c?c.device||'':'';
   $('#cInstall').value=c?c.installDate||'':'';
-  $('#cPre').value=c&&c.parts?c.parts.pre||'':''; $('#cPost').value=c&&c.parts?c.parts.post||'':''; $('#cMem').value=c&&c.parts?c.parts.membrane||'':'';
+  const sp=v=>{const x=String(v||'').split(' ');return [x[0]||'',x[1]||''];};
+  const vp=c&&c.parts?sp(c.parts.pre):['',''], vo=c&&c.parts?sp(c.parts.post):['',''], vm=c&&c.parts?sp(c.parts.membrane):['',''];
+  $('#cPre').value=vp[0]; $('#cPreT').value=vp[1]; $('#cPost').value=vo[0]; $('#cPostT').value=vo[1]; $('#cMem').value=vm[0]; $('#cMemT').value=vm[1];
   $('#cNotes').value=c?c.notes||'':'';
   const cy=(CUST&&CUST.cycles)||{pre:6,post:12,membrane:24};
 
@@ -1079,9 +1086,10 @@ $('#cSave').addEventListener('click',async()=>{
   if(!name){toast('اكتب اسم العميل','bad');return;}
   if(!/^05\d{8}$/.test(phone)){toast('رقم الجوال لازم يكون بصيغة 05xxxxxxxx','bad');return;}
   const parts={};
-  if($('#cPre').value)parts.pre=$('#cPre').value;
-  if($('#cPost').value)parts.post=$('#cPost').value;
-  if($('#cMem').value)parts.membrane=$('#cMem').value;
+  const joinP=(d,tm)=>d?(d+(tm?' '+tm:'')):'';
+  if($('#cPre').value)parts.pre=joinP($('#cPre').value,$('#cPreT').value);
+  if($('#cPost').value)parts.post=joinP($('#cPost').value,$('#cPostT').value);
+  if($('#cMem').value)parts.membrane=joinP($('#cMem').value,$('#cMemT').value);
   const rec={id:cEdit||('c'+Date.now()),name,phone,area:$('#cArea').value.trim(),device:$('#cDevice').value.trim(),installDate:$('#cInstall').value,parts,notes:$('#cNotes').value.trim()};
   if(cEdit){const i=CUST.customers.findIndex(x=>x.id===cEdit);CUST.customers[i]=rec;}
   else CUST.customers.push(rec);
@@ -1112,19 +1120,67 @@ $('#cycSave').addEventListener('click',async()=>{
   CUST.cycles={pre:+$('#cycPre').value||6,post:+$('#cycPost').value||12,membrane:+$('#cycMem').value||24};
   if(await saveCust())renderCust();
 });
+function custRowsSorted(){
+  const cyc=CUST.cycles||{pre:6,post:12,membrane:24};
+  return CUST.customers.map(c=>({c,e:custEntries(c,cyc)[0]||null}))
+    .sort((a,b)=>(a.e?a.e.days:99999)-(b.e?b.e.days:99999));
+}
+const custStatus=(c,e)=>!e?'بلا سجل':holdOn(c)?('مؤجل حتى '+c.hold.until):e.days<0?('متأخر '+Math.abs(e.days)+' يوم'):e.days<=30?('باقي '+e.days+' يوم'):('سليم · باقي '+e.days+' يوم');
 $('#custCsv').addEventListener('click',()=>{
   if(!CUST)return;
   const cyc=CUST.cycles||{pre:6,post:12,membrane:24};
-  const lines=['"الاسم","الجوال","الحي","الجهاز","تاريخ التركيب","استحقاق الأولية","استحقاق النهائية","استحقاق الممبرين"'];
-  CUST.customers.forEach(c=>{
-    const en=custEntries(c,cyc), g=p=>{const e=en.find(x=>x.part===p);return e?e.due:'';};
-    lines.push([c.name,c.phone,c.area,c.device,c.installDate,g('pre'),g('post'),g('membrane')].map(v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(','));
+  const lines=['"الاسم","الجوال","الحي","الجهاز","أقرب استحقاق","الجزء","الحالة","ملاحظات"'];
+  custRowsSorted().forEach(({c,e})=>{
+    const star=(e&&e.days<0&&!holdOn(c))?'★ ':'';
+    lines.push([star+c.name,c.phone,c.area,c.device,e?e.due:'',e?PART_AR[e.part]:'',custStatus(c,e),(c.hold&&c.hold.note)||c.notes||''].map(v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(','));
   });
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob(['\uFEFF'+lines.join('\n')],{type:'text/csv;charset=utf-8'}));
   a.download='furat-customers.csv'; a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),5000);
   toast('تم تصدير CSV (يفتح بإكسل)','ok');
+});
+$('#custPdf').addEventListener('click',()=>{
+  if(!CUST)return;
+  const rows=custRowsSorted();
+  const cyc=CUST.cycles||{pre:6,post:12,membrane:24};
+  const over=rows.filter(r=>r.e&&r.e.days<0&&!holdOn(r.c)).length;
+  const soon=rows.filter(r=>r.e&&r.e.days>=0&&r.e.days<=30&&!holdOn(r.c)).length;
+  const trs=rows.map(({c,e})=>{
+    const st=!e?'mut':holdOn(c)?'hold':e.days<0?'over':e.days<=30?'soon':'ok';
+    const star=st==='over'?'<span style="color:#d93025;font-size:1.05em">★ </span>':'';
+    return `<tr class="r-${st}"><td>${star}<b>${cesc(c.name)}</b>${c.hold&&c.hold.note?`<br><small>ملاحظة التأجيل: ${cesc(c.hold.note)}</small>`:''}</td><td style="direction:ltr;text-align:right">${cesc(c.phone||'—')}</td><td>${cesc(c.area||'—')}</td><td>${cesc(c.device||'—')}</td><td style="direction:ltr;text-align:right">${e?e.due:'—'}${e&&e.last&&e.last.length>10?`<br><small>ساعة ${cesc(e.last.slice(11))}</small>`:''}</td><td>${e?PART_AR[e.part]:'—'}</td><td><b>${custStatus(c,e)}</b></td></tr>`;
+  }).join('');
+  const html=`<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>تقرير العملاء — الفرات الحلوة</title>
+<style>
+@page{margin:14mm}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;color:#12303f;margin:0;padding:26px;background:#fff}
+.hd{display:flex;align-items:center;gap:14px;border-bottom:3px solid #0E5E82;padding-bottom:14px;margin-bottom:16px}
+.hd img{width:150px;height:auto}
+.hd h1{font-size:1.25rem;margin:0;color:#0E5E82}
+.hd small{color:#5b7686;display:block;margin-top:4px}
+.st{display:flex;gap:10px;margin-bottom:14px}
+.st div{border:1px solid #d8e6ee;border-radius:10px;padding:8px 14px;font-size:.85rem;background:#f4fafc}
+.st b{color:#0E5E82}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{background:#0E5E82;color:#fff;padding:8px 9px;text-align:right;font-weight:700}
+td{border-bottom:1px solid #e2edf2;padding:7px 9px;vertical-align:top}
+tr.r-over td{background:#fdecec}
+tr.r-hold td{background:#fff6e5}
+tr.r-soon td{background:#fffbea}
+small{color:#5b7686}
+.ft{margin-top:16px;font-size:.75rem;color:#5b7686;border-top:1px dashed #b9d2dd;padding-top:10px}
+</style></head><body>
+<div class="hd"><img src="${location.origin}/assets/logo/logo-lockup.png" alt=""><div><h1>تقرير سجل العملاء والتذكيرات</h1><small>الفرات الحلوة لتحلية المياه — الرياض · تاريخ التقرير: ${iso(new Date())}</small></div></div>
+<div class="st"><div>إجمالي العملاء: <b>${rows.length}</b></div><div>متأخرون ★: <b style="color:#d93025">${over}</b></div><div>استحقاق خلال 30 يوم: <b>${soon}</b></div><div>مؤجلون: <b>${rows.filter(r=>holdOn(r.c)).length}</b></div></div>
+<table><thead><tr><th>الاسم</th><th>الجوال</th><th>الحي</th><th>الجهاز</th><th>أقرب استحقاق</th><th>الجزء</th><th>الحالة</th></tr></thead><tbody>${trs}</tbody></table>
+<div class="ft">★ بجانب الاسم = تجاوز موعد تغيير الفلاتر ويحتاج اتصال اليوم. الصفوف الملونة: أحمر متأخر، برتقالي مؤجل بقرار من المحل، أصفر استحقاق قريب. صدرت من لوحة تحكم الفرات الحلوة.</div>
+</body></html>`;
+  const w=window.open('','_blank');
+  if(!w){toast('المتصفح منع نافذة الطباعة — اسمح بالنوافذ المنبثقة','bad');return;}
+  w.document.open(); w.document.write(html); w.document.close();
+  setTimeout(()=>{try{w.focus();w.print();}catch(e){}},500);
+  toast('جهّزنا تقرير PDF مصمم — اختر «حفظ كـ PDF» من نافذة الطباعة','ok');
 });
 
 $('#btnLogout').addEventListener('click',e=>{
