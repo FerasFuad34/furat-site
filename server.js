@@ -94,6 +94,8 @@ app.get('/manifest.webmanifest', (req, res) => {
   });
 });
 
+const ADMIN_BUILD = 21;
+app.get('/api/build', (req, res) => { res.set('Cache-Control', 'no-store'); res.json({ admin: ADMIN_BUILD }); });
 app.get('/sw.js', (req, res) => {
   res.type('application/javascript').send(`
 const C='furat-v37';
