@@ -128,11 +128,12 @@
 
   function renderCart() {
     const body = $('#cartBody'), cnt = $('#cartCount'), tot = $('#cartTotal');
+    const keepScroll = body ? body.scrollTop : 0;
     if (cnt) cnt.textContent = String(cart.reduce((s, i) => s + i.q, 0));
     if (tot) tot.textContent = fmt(cartTotal()) + ' ريال';
     if (!body) return;
     if (!cart.length) {
-      body.innerHTML = '<div class="cart-empty"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2.5 3h2.6l2.6 12.2h11L21 7H6"/></svg>سلتك فاضية.<br>أضف منتج وأرسل الطلب رسالة واتساب جاهزة.</div>';
+      body.innerHTML = '<div class="cart-empty"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2.5 3h2.6l2.6 12.2h11L21 7H6"/></svg>سلتك فاضية.</div>';
       return;
     }
     body.innerHTML = cart.map(i => {
@@ -141,10 +142,11 @@
       return `<div class="ci" data-id="${p.id}">
         <div class="ci-img">${p.image ? `<img src="${p.image}" alt="">` : art}</div>
         <div class="ci-info"><b>${p.name}</b><span>${fmt(p.price)} ريال</span></div>
-        <div class="qty"><button data-q="-1" aria-label="إنقاص">−</button><b>${i.q}</b><button data-q="1" aria-label="زيادة">+</button></div>
-        <button class="ci-del" data-del>حذف</button>
+        <div class="qty"><button data-q="-1" aria-label="إنقاص"${i.q <= 1 ? ' disabled' : ''}>−</button><b>${i.q}</b><button data-q="1" aria-label="زيادة">+</button></div>
+        <button class="ci-del" data-del aria-label="حذف من السلة" title="حذف"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>`;
     }).join('');
+    body.scrollTop = keepScroll;
   }
 
   function openCart() {
@@ -181,8 +183,9 @@
         const row = q.closest('.ci'), id = row && row.getAttribute('data-id');
         const it = cart.find(i => i.id === id);
         if (!it) return;
-        it.q += Number(q.getAttribute('data-q'));
-        if (it.q <= 0) cart = cart.filter(i => i.id !== id);
+        const dq = Number(q.getAttribute('data-q'));
+        if (dq < 0 && it.q <= 1) return;
+        it.q = Math.max(1, it.q + dq);
         saveCart();
         return;
       }

@@ -10,9 +10,9 @@ const MIME = { '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg
 const b64 = p => 'data:' + (MIME[path.extname(p).toLowerCase()] || 'application/octet-stream') + ';base64,' + fs.readFileSync(path.join(ROOT, p)).toString('base64');
 
 let html = R.pages.home(data);
-html = html.replace('<link rel="stylesheet" href="/assets/css/style.css?v=38">', '<style>\n' + read('public/assets/css/style.css') + '\n</style>');
-html = html.replace('<script src="/assets/js/art.js?v=38" defer></script>', '<script>\n' + read('public/assets/js/art.js') + '\n</script>');
-html = html.replace('<script src="/assets/js/app.js?v=38" defer></script>', '<script>\n' + read('public/assets/js/app.js') + '\n</script>');
+html = html.replace('<link rel="stylesheet" href="/assets/css/style.css?v=39">', '<style>\n' + read('public/assets/css/style.css') + '\n</style>');
+html = html.replace('<script src="/assets/js/art.js?v=39" defer></script>', '<script>\n' + read('public/assets/js/art.js') + '\n</script>');
+html = html.replace('<script src="/assets/js/app.js?v=39" defer></script>', '<script>\n' + read('public/assets/js/app.js') + '\n</script>');
 html = html.replace('<link rel="manifest" href="/manifest.webmanifest">\n', '');
 html = html.replace('href="/assets/favicon.png"', 'href="' + b64('public/assets/favicon.png') + '"');
 html = html.replace('href="/assets/logo/icon-192.png"', 'href="' + b64('public/assets/logo/icon-192.png') + '"');
