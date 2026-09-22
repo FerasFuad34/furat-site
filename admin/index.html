@@ -189,6 +189,16 @@ a{color:var(--river)}
 
 .b-danger{background:#FFE5E5;color:#C62828;border:1px solid rgba(229,72,77,.35)}
 @media(max-width:1023px){.tbl{font-size:.8rem}.tbl td,.tbl th{padding:6px 7px}.tbl .btn-xs2{padding:5px 7px;font-size:.68rem}.rowacts{gap:2px}}
+@media(max-width:959px){
+#pTbl thead,#custTbl thead{display:none}
+#pTbl tbody tr,#custTbl tbody tr{display:block;border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px 12px;margin-bottom:10px}
+#pTbl tbody td,#custTbl tbody td{display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;padding:5px 0;white-space:normal}
+#pTbl tbody td::before,#custTbl tbody td::before{content:attr(data-l);font-size:.75rem;font-weight:800;color:var(--t2);flex:none}
+#pTbl tbody td[data-l=""]::before,#custTbl tbody td[data-l=""]::before{content:none}
+#pTbl tbody td[colspan],#custTbl tbody td[colspan]{display:block;text-align:center;color:var(--t2);padding:26px 10px}
+.scroll{overflow:visible}
+#pTbl .rowacts,#custTbl .rowacts{justify-content:flex-end;flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
@@ -211,7 +221,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 21 — 2026/9/22</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 22 — 2026/9/22</span>
     </div>
   </aside>
 
@@ -641,14 +651,14 @@ function renderProducts(){
     const c=D.categories.find(x=>x.id===p.category)||{};
     const off=p.oldPrice&&p.oldPrice>p.price?Math.round((1-p.price/p.oldPrice)*100):0;
     return `<tr data-id="${p.id}">
-      <td><div class="tbl-img">${p.image?`<img src="${p.image}" alt="">`:'<div style="width:100%;height:100%;background:linear-gradient(135deg,#E4F3F9,#D6EBF4)"></div>'}</div></td>
-      <td><b>${p.name||''}</b><br><small style="color:var(--t2)">${p.type||''}</small></td>
-      <td>${c.short||c.name||''}</td>
-      <td><b style="color:var(--abyss)">${Number(p.price||0).toLocaleString('en-US')}</b> ر.س ${off?`<span class="badge b-warn">-${off}%</span>`:''}</td>
-      <td style="color:var(--t2)">${p.oldPrice?Number(p.oldPrice).toLocaleString('en-US'):''}</td>
-      <td>${p.badge?`<span class="badge b-ok">${p.badge}</span>`:''}</td>
-      <td><span class="badge ${p.stock==='متوفر'?'b-ok':'b-mut'}">${p.stock||'—'}</span></td>
-      <td><div class="rowacts">
+      <td data-l=""><div class="tbl-img">${p.image?`<img src="${p.image}" alt="">`:'<div style="width:100%;height:100%;background:linear-gradient(135deg,#E4F3F9,#D6EBF4)"></div>'}</div></td>
+      <td data-l="المنتج"><b>${p.name||''}</b><br><small style="color:var(--t2)">${p.type||''}</small></td>
+      <td data-l="القسم">${c.short||c.name||''}</td>
+      <td data-l="السعر"><b style="color:var(--abyss)">${Number(p.price||0).toLocaleString('en-US')}</b> ر.س ${off?`<span class="badge b-warn">-${off}%</span>`:''}</td>
+      <td data-l="قبل الخصم" style="color:var(--t2)">${p.oldPrice?Number(p.oldPrice).toLocaleString('en-US'):''}</td>
+      <td data-l="الشارة">${p.badge?`<span class="badge b-ok">${p.badge}</span>`:''}</td>
+      <td data-l="التوفر"><span class="badge ${p.stock==='متوفر'?'b-ok':'b-mut'}">${p.stock||'—'}</span></td>
+      <td data-l=""><div class="rowacts">
         <button class="btn btn-ghost btn-xs2" data-act="up">أعلى</button>
         <button class="btn btn-ghost btn-xs2" data-act="down">أسفل</button>
         <button class="btn btn-ghost btn-xs2" data-act="dup">تكرار</button>
@@ -1055,13 +1065,13 @@ async function renderCust(){
       :`<span class="badge b-ok">سليم · باقي ${e.days} يوم</span>`;
     const due=e?`<b style="direction:ltr;display:inline-block">${e.due}</b><br><small style="color:var(--t2)">${PART_AR[e.part]}<br>آخر تغيير <span style="direction:ltr;display:inline-block">${e.last}</span></small>`:'<span style="color:var(--t2)">—</span>';
     return `<tr>
-      <td><b${e&&e.days<0&&!holdOn(c)?' class="nm-over"':''}>${cesc(c.name)}</b>${holdOn(c)?`<br><small style="color:#8a5a00">ملاحظة التأجيل: ${cesc(c.hold.note||'بدون ملاحظة')}</small>`:c.notes?`<br><small style="color:var(--t2)">${cesc(c.notes)}</small>`:''}</td>
-      <td style="direction:ltr;text-align:right;white-space:nowrap">${cesc(c.phone||'—')}</td>
-      <td>${cesc(c.area||'—')}</td>
-      <td>${cesc(c.device||'—')}</td>
-      <td style="white-space:nowrap">${due}</td>
-      <td>${badge}</td>
-      <td><div class="rowacts">
+      <td data-l="العميل"><b${e&&e.days<0&&!holdOn(c)?' class="nm-over"':''}>${cesc(c.name)}</b>${holdOn(c)?`<br><small style="color:#8a5a00">ملاحظة التأجيل: ${cesc(c.hold.note||'بدون ملاحظة')}</small>`:c.notes?`<br><small style="color:var(--t2)">${cesc(c.notes)}</small>`:''}</td>
+      <td data-l="الجوال" style="direction:ltr;text-align:right;white-space:nowrap">${cesc(c.phone||'—')}</td>
+      <td data-l="العنوان">${cesc(c.area||'—')}</td>
+      <td data-l="الجهاز">${cesc(c.device||'—')}</td>
+      <td data-l="أقرب استحقاق" style="white-space:nowrap">${due}</td>
+      <td data-l="الحالة">${badge}</td>
+      <td data-l=""><div class="rowacts">
         ${e?`<a class="btn btn-ghost btn-xs2" target="_blank" rel="noopener" href="${waReminder(c,e)}">تذكير واتس</a>
         <button class="btn btn-ghost btn-xs2" data-cdone="${c.id}" data-part="${e.part}">تم التغيير</button>`:''}
         ${e&&e.days<0&&!holdOn(c)?`<button class="btn btn-ghost btn-xs2" data-chold="${c.id}">تأجيل</button>`:''}
