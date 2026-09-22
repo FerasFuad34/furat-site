@@ -94,7 +94,7 @@ app.get('/manifest.webmanifest', (req, res) => {
   });
 });
 
-const ADMIN_BUILD = 24;
+const ADMIN_BUILD = 25;
 app.get('/api/build', (req, res) => { res.set('Cache-Control', 'no-store'); res.json({ admin: ADMIN_BUILD }); });
 app.get('/sw.js', (req, res) => {
   res.type('application/javascript').send(`
