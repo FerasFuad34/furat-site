@@ -108,6 +108,7 @@ a{color:var(--river)}
 .toast{position:fixed;bottom:24px;inset-inline-end:24px;z-index:80;background:var(--abyss);color:#fff;padding:13px 20px;border-radius:13px;font-weight:700;box-shadow:0 18px 40px -14px rgba(0,0,0,.55);opacity:0;transform:translateY(14px);transition:.3s;pointer-events:none;font-size:.9rem}
 .toast.on{opacity:1;transform:none}
 .toast.ok{background:var(--ok)}.toast.bad{background:var(--bad)}
+.nm-over{border-bottom:2.5px solid #e5484d;padding-bottom:2px}
 .hint{background:#F0F8FB;border:1px solid #CFE7F1;border-radius:12px;padding:12px 15px;font-size:.85rem;color:var(--t2);margin-bottom:15px}
 .hint b{color:var(--river)}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
@@ -203,7 +204,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 14 — 2026/9/22</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 15 — 2026/9/22</span>
     </div>
   </aside>
 
@@ -480,6 +481,15 @@ a{color:var(--river)}
   <div class="modal-foot"><button class="btn btn-ghost" data-cclose>إلغاء</button><button class="btn btn-gold" id="cSave">حفظ العميل</button></div>
 </div></div>
 
+<div class="modal" id="mHold"><div class="modal-in">
+  <div class="modal-head"><h3 id="mHoldTitle">تأجيل التذكير</h3><button class="x" data-hclose>✕</button></div>
+  <div class="modal-body">
+    <label class="f"><span>مدة التأجيل</span><select id="hQuick"><option value="7">أسبوع</option><option value="14" selected>أسبوعين</option><option value="30">شهر</option><option value="custom">تاريخ محدد…</option></select></label>
+    <label class="f"><span>تأجيل حتى</span><input type="date" id="hUntil"></label>
+    <label class="f"><span>ملاحظة رد الزبون</span><textarea id="hNote" rows="2" placeholder="مثال: مسافر ويرجع بداية الشهر"></textarea></label>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" data-hclose>إلغاء</button><button class="btn btn-gold" id="hSave">تأكيد التأجيل</button></div>
+</div></div>
 <div class="modal" id="mCat"><div class="modal-in">
   <div class="modal-head"><h3>إضافة قسم جديد</h3><button class="x" data-mclose="mCat">✕</button></div>
   <div class="modal-body">
@@ -776,11 +786,12 @@ function showDueAlert(){
   const box=$('#dueAlert'); if(!box||!CUST)return;
   const cyc=CUST.cycles||{pre:6,post:12,membrane:24};
   let over=0,soon=0;
-  CUST.customers.forEach(c=>{const e=custEntries(c,cyc)[0]; if(!e)return; if(e.days<0)over++; else if(e.days<=30)soon++;});
+  const overNames=[];
+  CUST.customers.forEach(c=>{const e=custEntries(c,cyc)[0]; if(!e||holdOn(c))return; if(e.days<0){over++;overNames.push(c.name);} else if(e.days<=30)soon++;});
   if(!over&&!soon){box.hidden=true;return;}
   box.hidden=false;
   box.className='alert '+(over?'alert-over':'alert-soon');
-  box.innerHTML=(over?`<b>${over} عميل</b> تجاوزوا موعد تغيير الفلاتر — كلّمهم اليوم`:'')
+  box.innerHTML=(over?`<b>${over} عميل</b> تجاوزوا موعد تغيير الفلاتر — كلّمهم اليوم`+(overNames.length?` <small style="opacity:.85">(${overNames.slice(0,3).map(cesc).join('، ')}${overNames.length>3?'…':''})</small>`:''):'')
     +(over&&soon?' &nbsp;·&nbsp; ':'')
     +(soon?`<b>${soon} عميل</b> موعد فلاترهم خلال 30 يوم`:'')
     +'<button class="btn btn-gold btn-sm" id="dueGo">عرض القائمة</button>';
@@ -958,6 +969,14 @@ let CUST=null, cEdit=null;
 const iso=d=>d.toISOString().slice(0,10);
 const addMonths=(ds,m)=>{const d=new Date(ds+'T00:00:00');d.setMonth(d.getMonth()+m);return d;};
 const daysUntil=ds=>Math.ceil((new Date(ds+'T00:00:00')-new Date(new Date().toDateString()))/86400000);
+const holdOn=c=>c&&c.hold&&c.hold.until&&c.hold.until>=iso(new Date());
+let holdId=null;
+function setHoldDate(days){const d=new Date();d.setDate(d.getDate()+Number(days));$('#hUntil').value=iso(d);}
+function openHold(id){const c=CUST.customers.find(x=>x.id===id);if(!c)return;holdId=id;
+  $('#mHoldTitle').textContent='تأجيل تذكير: '+c.name;
+  $('#hQuick').value='14';setHoldDate(14);
+  $('#hNote').value=(c.hold&&c.hold.note)||'';
+  $('#mHold').classList.add('on');}
 function custEntries(c,cyc){
   const out=[];
   ['pre','post','membrane'].forEach(k=>{
@@ -994,8 +1013,8 @@ async function renderCust(){
   const cyc=CUST.cycles||{pre:6,post:12,membrane:24};
   $('#cycPre').value=cyc.pre; $('#cycPost').value=cyc.post; $('#cycMem').value=cyc.membrane;
   const rows=CUST.customers.map(c=>({c,e:custEntries(c,cyc)[0]||null}));
-  const over=rows.filter(r=>r.e&&r.e.days<0).length;
-  const soon=rows.filter(r=>r.e&&r.e.days>=0&&r.e.days<=30).length;
+  const over=rows.filter(r=>r.e&&r.e.days<0&&!holdOn(r.c)).length;
+  const soon=rows.filter(r=>r.e&&r.e.days>=0&&r.e.days<=30&&!holdOn(r.c)).length;
   const mid=rows.filter(r=>r.e&&r.e.days>30&&r.e.days<=90).length;
   $('#custStats').innerHTML=[
     [rows.length,'عميل بالسجل'],
@@ -1013,12 +1032,13 @@ async function renderCust(){
   list.sort((a,b)=>(a.e?a.e.days:99999)-(b.e?b.e.days:99999));
   $('#custTable').innerHTML=list.length?list.map(({c,e})=>{
     const badge=!e?'<span class="badge b-mut">بلا سجل تغييرات</span>'
+      :holdOn(c)?`<span class="badge b-warn">مؤجل حتى ${c.hold.until}</span>`
       :e.days<0?`<span class="badge b-danger">متأخر ${Math.abs(e.days)} يوم</span>`
       :e.days<=30?`<span class="badge b-warn">باقي ${e.days} يوم</span>`
       :`<span class="badge b-ok">سليم · باقي ${e.days} يوم</span>`;
     const due=e?`<b style="direction:ltr;display:inline-block">${e.due}</b><br><small style="color:var(--t2)">${PART_AR[e.part]} — آخر تغيير ${e.last}</small>`:'<span style="color:var(--t2)">—</span>';
     return `<tr>
-      <td><b>${cesc(c.name)}</b>${c.notes?`<br><small style="color:var(--t2)">${cesc(c.notes)}</small>`:''}</td>
+      <td><b${e&&e.days<0&&!holdOn(c)?' class="nm-over"':''}>${cesc(c.name)}</b>${holdOn(c)?`<br><small style="color:#8a5a00">ملاحظة التأجيل: ${cesc(c.hold.note||'بدون ملاحظة')}</small>`:c.notes?`<br><small style="color:var(--t2)">${cesc(c.notes)}</small>`:''}</td>
       <td style="direction:ltr;text-align:right;white-space:nowrap">${cesc(c.phone||'—')}</td>
       <td>${cesc(c.area||'—')}</td>
       <td>${cesc(c.device||'—')}</td>
@@ -1027,6 +1047,8 @@ async function renderCust(){
       <td><div class="rowacts">
         ${e?`<a class="btn btn-ghost btn-xs2" target="_blank" rel="noopener" href="${waReminder(c,e)}">تذكير واتساب</a>
         <button class="btn btn-ghost btn-xs2" data-cdone="${c.id}" data-part="${e.part}">تم التغيير</button>`:''}
+        ${e&&e.days<0&&!holdOn(c)?`<button class="btn btn-ghost btn-xs2" data-chold="${c.id}">تأجيل</button>`:''}
+        ${holdOn(c)?`<button class="btn btn-ghost btn-xs2" data-cunhold="${c.id}">إلغاء التأجيل</button>`:''}
         <button class="btn btn-ghost btn-xs2" data-cedit="${c.id}">تعديل</button>
         <button class="btn btn-ghost btn-xs2 btn-danger" data-cdel="${c.id}">حذف</button>
       </div></td>
@@ -1048,6 +1070,9 @@ function openCustModal(id){
   $('#mC').classList.add('on');
 }
 $$('[data-cclose]').forEach(b=>b.addEventListener('click',()=>$('#mC').classList.remove('on')));
+$('#hQuick').addEventListener('change',()=>{if($('#hQuick').value!=='custom')setHoldDate($('#hQuick').value);});
+$$('[data-hclose]').forEach(b=>b.addEventListener('click',()=>$('#mHold').classList.remove('on')));
+$('#hSave').addEventListener('click',async()=>{const c=CUST.customers.find(x=>x.id===holdId);if(!c)return;const until=$('#hUntil').value;if(!until){toast('حدد تاريخ التأجيل','bad');return;}c.hold={until,note:$('#hNote').value.trim(),at:iso(new Date())};$('#mHold').classList.remove('on');if(await saveCust()){renderCust();showDueAlert();toast('تم تأجيل التذكير حتى '+until,'ok');}});
 $('#custAdd').addEventListener('click',()=>openCustModal(null));
 $('#cSave').addEventListener('click',async()=>{
   const name=$('#cName').value.trim(), phone=$('#cPhone').value.trim();
@@ -1064,12 +1089,14 @@ $('#cSave').addEventListener('click',async()=>{
   if(await saveCust())renderCust();
 });
 $('#custTable').addEventListener('click',async e=>{
-  const done=e.target.closest('[data-cdone]'), ed=e.target.closest('[data-cedit]'), dl=e.target.closest('[data-cdel]');
+  const done=e.target.closest('[data-cdone]'), ed=e.target.closest('[data-cedit]'), dl=e.target.closest('[data-cdel]'), hd=e.target.closest('[data-chold]'), uh=e.target.closest('[data-cunhold]');
+  if(hd){openHold(hd.getAttribute('data-chold'));return;}
+  if(uh){const c=CUST.customers.find(x=>x.id===uh.getAttribute('data-cunhold'));if(!c)return;delete c.hold;if(await saveCust()){renderCust();showDueAlert();toast('رجع التذكير يشتغل للعميل','ok');}return;}
   if(done){
     const c=CUST.customers.find(x=>x.id===done.getAttribute('data-cdone')); if(!c)return;
     const part=done.getAttribute('data-part');
     if(!confirm(`نسجّل إن «${PART_AR[part]}» تغيّرت اليوم عند ${c.name}؟ بيصفّر العداد ويبدأ دورة جديدة.`))return;
-    c.parts=c.parts||{}; c.parts[part]=iso(new Date());
+    c.parts=c.parts||{}; c.parts[part]=iso(new Date()); delete c.hold;
     if(await saveCust())renderCust();
   } else if(ed){ openCustModal(ed.getAttribute('data-cedit')); }
   else if(dl){
