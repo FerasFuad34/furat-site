@@ -76,7 +76,7 @@ a{color:var(--river)}
 .tbl-img img,.tbl-img svg{width:100%;height:100%;object-fit:cover}
 .badge{display:inline-block;padding:4px 10px;border-radius:10px;font-size:.72rem;font-weight:800;line-height:1.5;text-align:center}
 .b-ok{background:#DFF5E9;color:#127A46}.b-warn{background:#FDF0D8;color:#8A5C10}.b-mut{background:#EDF2F6;color:#5A7184}
-.rowacts{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:nowrap}
+'.rowacts{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:nowrap}
 .iconbtn{background:#F3F8FB;border:1px solid var(--line);border-radius:9px;width:31px;height:31px;cursor:pointer;display:grid;place-items:center;transition:.2s;font-size:.9rem}
 .iconbtn:hover{background:#E4F1F8;border-color:var(--clear)}
 .iconbtn.del:hover{background:#FDECEA;border-color:#F0B4AC}
@@ -115,7 +115,8 @@ a{color:var(--river)}
 .hint{background:#F0F8FB;border:1px solid #CFE7F1;border-radius:12px;padding:12px 15px;font-size:.85rem;color:var(--t2);margin-bottom:15px}
 .hint b{color:var(--river)}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;overscroll-behavior:contain}
-@media(max-width:960px){input,select,textarea,.f input,.f select,.f textarea,#custSearch{font-size:16px}
+
+@media(max-width:1279px){input,select,textarea,.f input,.f select,.f textarea,#custSearch{font-size:16px}
 #stats:empty{min-height:172px}
 .app{grid-template-columns:1fr}.side{position:relative;height:auto;display:flex;flex-direction:column;gap:10px;align-items:stretch;overflow:visible;padding:12px 12px 10px}.side-brand{border:0;margin:0;padding:0;flex:none;display:flex;align-items:center;gap:10px}.side nav{display:flex;flex-wrap:wrap;gap:6px}.side-foot{display:none}.grid2,.grid3{grid-template-columns:1fr}.main{padding:16px 14px 90px}}
 .crow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:var(--card)}
@@ -187,6 +188,7 @@ a{color:var(--river)}
 .ver{display:block;margin-top:10px;font-size:.7rem;color:var(--t2);opacity:.8}
 
 .b-danger{background:#FFE5E5;color:#C62828;border:1px solid rgba(229,72,77,.35)}
+@media(max-width:1023px){.tbl{font-size:.8rem}.tbl td,.tbl th{padding:6px 7px}.tbl .btn-xs2{padding:5px 7px;font-size:.68rem}.rowacts{gap:2px}}
 </style>
 </head>
 <body>
@@ -209,7 +211,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 19 — 2026/9/22</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 20 — 2026/9/22</span>
     </div>
   </aside>
 
@@ -650,7 +652,7 @@ function renderProducts(){
         <button class="btn btn-ghost btn-xs2" data-act="up">أعلى</button>
         <button class="btn btn-ghost btn-xs2" data-act="down">أسفل</button>
         <button class="btn btn-ghost btn-xs2" data-act="dup">تكرار</button>
-        <button class="btn btn-ghost btn-xs2" data-act="card">بطاقة QR</button>
+        <button class="btn btn-ghost btn-xs2" data-act="card">QR</button>
         <button class="btn btn-ghost btn-xs2" data-act="edit">تعديل</button>
         <button class="btn btn-ghost btn-xs2 btn-danger" data-act="del">حذف</button>
       </div></td></tr>`;
