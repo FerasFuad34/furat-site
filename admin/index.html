@@ -221,7 +221,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 25 — 2026/9/22</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 26 — 2026/9/22</span>
     </div>
   </aside>
 
@@ -941,7 +941,7 @@ async function renderBackup(){
     const r=await fetch('/api/admin/backup',{cache:'no-store',headers:authHeaders()});
     if(r.status===401)return;
     const j=await r.json();
-    el.innerHTML=(j.mysql?'القاعدة: <b>MySQL</b>':'النسخ الاحتياطي: <b>شغال</b>')+(j.last?' — آخر لقطة: <b>'+new Date(j.last).toLocaleString('ar-SA')+'</b>':'');
+    el.innerHTML=(j.mysql?'القاعدة: <b>MySQL</b>':j.sqlite?'القاعدة: <b>SQLite — ملف واحد داخل سيرفركم</b>':'النسخ الاحتياطي: <b>شغال</b>')+(j.last?' — آخر لقطة: <b>'+new Date(j.last).toLocaleString('ar-SA')+'</b>':'');
   }catch(e){el.textContent='تعذر جلب حالة النسخ الاحتياطي.';}
 }
 $('#bkDownload')&&$('#bkDownload').addEventListener('click',async()=>{

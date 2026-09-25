@@ -94,7 +94,7 @@ app.get('/manifest.webmanifest', (req, res) => {
   });
 });
 
-const ADMIN_BUILD = 25;
+const ADMIN_BUILD = 26;
 app.get('/api/build', (req, res) => { res.set('Cache-Control', 'no-store'); res.json({ admin: ADMIN_BUILD }); });
 app.get('/sw.js', (req, res) => {
   res.type('application/javascript').send(`
@@ -239,8 +239,8 @@ app.get('/api/admin/meta', (req, res) => {
 /* ---------- النسخ الاحتياطي (خاص باللوحة) ---------- */
 app.get('/api/admin/backup', (req, res) => {
   if (!isAdmin(req)) return res.status(401).json({ error: 'unauthorized' });
-  let n = 0; try { n = fs.readdirSync(BK_DIR).length; } catch (e) {}
-  res.json({ active: true, local: STORE.mode === 'file', mysql: STORE.mode === 'mysql', mode: STORE.mode, snapshots: n, last: LAST_SNAP || null });
+  let n = 0; try { n = fs.readdirSync(BK_DIR).filter(f => f.endsWith('.json')).length; } catch (e) {}
+  res.json({ active: true, local: STORE.mode === 'file', mysql: STORE.mode === 'mysql', sqlite: STORE.mode === 'sqlite', mode: STORE.mode, snapshots: n, last: LAST_SNAP || null });
 });
 app.post('/api/admin/backup', (req, res) => {
   if (!isAdmin(req)) return res.status(401).json({ error: 'unauthorized' });
