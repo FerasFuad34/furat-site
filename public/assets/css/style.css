@@ -146,7 +146,7 @@ html[data-theme="dark"] .brand-txt b{color:#fff}
   background:rgba(47,182,216,.14);color:var(--river);border:1px solid rgba(47,182,216,.28)}
 .eyebrow--light{background:rgba(255,255,255,.12);color:#BFF0F5;border-color:rgba(255,255,255,.22)}
 .eyebrow .ic{width:15px;height:15px;color:var(--gold)}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0 18px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 22px}
 .hero-badges{list-style:none;display:flex;flex-wrap:wrap;gap:8px 18px;padding:0;margin:0 0 18px;font-size:.9rem;color:#D8EBF4}
 .hero-badges li{display:inline-flex;align-items:center;gap:6px}
 .hero-badges .ic{width:16px;height:16px;color:var(--aqua)}
@@ -257,7 +257,9 @@ html[data-theme="dark"] .pcard-media{background:#fff}
 .price s{font-size:.82rem;color:var(--text2)}
 .price b{font-family:var(--f-head);font-size:1.6rem;color:var(--abyss);line-height:1}
 html[data-theme="dark"] .price b{color:var(--aqua)}
-.price span{font-size:.76rem;color:var(--text2);font-weight:700}
+.price span{font-size:.8rem;color:var(--text2);font-weight:700}
+.price .sar{font-size:1.1rem;font-weight:800;color:var(--text2);margin-inline-start:1px;line-height:1}
+.sar{font-feature-settings:"liga" 0}
 .pcard-acts{display:flex;gap:6px}
 
 /* ---------- الفلاتر ---------- */
@@ -986,3 +988,11 @@ html[data-theme="dark"] .lines3 i{background:#fff}
 .loc-tx i{display:block;font-style:normal;font-size:.88rem;opacity:.85;line-height:1.7}
 .loc-tx em{display:block;font-style:normal;font-size:.78rem;opacity:.65;margin-top:2px}
 .loc-acts{display:flex;gap:9px;flex-wrap:wrap}
+
+/* الأقسام: شريط أفقي سلس على الهاتف، الشبكة كما هي على التابلت/الديسكتوب */
+@media(max-width:640px){
+ .cats{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-20px;padding:2px 20px 12px}
+ .cats::-webkit-scrollbar{display:none}
+ .cats .cat{flex:0 0 78%;scroll-snap-align:start;opacity:1;transform:none}
+ .cats .cat p{min-height:0}
+}
