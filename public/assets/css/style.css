@@ -113,7 +113,8 @@ html[data-theme="dark"] .brand-txt b{color:#fff}
 .nav a.is-active{color:var(--river)}
 .nav a.is-active::after{content:"";position:absolute;inset-inline:13px;bottom:2px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--aqua),var(--gold))}
 .hdr-cta{display:flex;align-items:center;gap:8px}
-.cart-btn{position:relative;background:rgba(47,182,216,.12);border:1px solid var(--border);width:40px;height:40px;border-radius:12px;display:grid;place-items:center;cursor:pointer;color:var(--river);transition:.22s}
+.cart-btn{position:relative;background:rgba(47,182,216,.12);border:1px solid var(--border);width:38px;height:38px;border-radius:11px;display:grid;place-items:center;cursor:pointer;color:var(--river);transition:.22s}
+.cart-btn .ic{width:18px;height:18px}
 .cart-btn:hover{background:rgba(47,182,216,.22);transform:translateY(-1px)}
 .cart-count{position:absolute;top:-6px;inset-inline-start:-6px;background:var(--gold);color:#3A2607;font-size:.68rem;font-weight:800;min-width:19px;height:19px;border-radius:999px;display:grid;place-items:center;border:2px solid var(--bg2)}
 .burger{display:none;background:transparent;border:1px solid var(--border);border-radius:10px;width:40px;height:40px;place-items:center;cursor:pointer;color:var(--river)}
@@ -258,8 +259,8 @@ html[data-theme="dark"] .pcard-media{background:#fff}
 .price b{font-family:var(--f-head);font-size:1.6rem;color:var(--abyss);line-height:1}
 html[data-theme="dark"] .price b{color:var(--aqua)}
 .price span{font-size:.8rem;color:var(--text2);font-weight:700}
-.price .sar{font-size:1.1rem;font-weight:800;color:var(--text2);margin-inline-start:1px;line-height:1}
-.sar{font-feature-settings:"liga" 0}
+.price .cur{display:inline-block;font-size:.8rem;font-weight:700;color:var(--river);margin-inline-start:7px;line-height:1}
+.pd-price .cur{display:inline-block;font-size:.95rem;font-weight:800;color:var(--river);margin-inline-start:8px;line-height:1}
 .pcard-acts{display:flex;gap:6px}
 
 /* ---------- الفلاتر ---------- */
@@ -423,6 +424,9 @@ html[data-theme="dark"] .pkg-price b{color:var(--honey)}
 .faq{display:grid;gap:11px}
 .faq-i{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:.28s}
 .faq-i[open]{border-color:rgba(47,182,216,.5);box-shadow:var(--shadow)}
+.faq-all>summary{font-size:1.04rem}
+.faq-all .faq{padding-top:6px}
+.faq-all .faq .faq-i{box-shadow:none}
 .faq-i summary{list-style:none;cursor:pointer;padding:17px 20px;font-weight:700;font-family:var(--f-head);display:flex;align-items:center;justify-content:space-between;gap:14px}
 .faq-i summary::-webkit-details-marker{display:none}
 .faq-ic{transition:transform .3s var(--ease);color:var(--river);flex:none}
@@ -631,6 +635,8 @@ html[data-theme="dark"] .cart-total b{color:var(--honey)}
   .burger{display:grid}
   .hdr-cta .btn--wa{display:none}
   .hdr-cta{margin-inline-start:auto}
+  .cart-btn{width:44px;height:44px;border-radius:13px}
+  .cart-btn .ic{width:22px;height:22px}
   .hide-sm{display:none}
   .values{grid-template-columns:1fr}
   .srv{grid-template-columns:1fr}
@@ -643,7 +649,8 @@ html[data-theme="dark"] .cart-total b{color:var(--honey)}
   .ftr-grid{grid-template-columns:1fr;gap:22px}
   .frow{grid-template-columns:1fr}
   .hdr-main-in{gap:12px;min-height:60px}
-  .cart-btn{width:42px;height:42px;border-radius:13px}
+  .cart-btn{width:46px;height:46px;border-radius:14px}
+  .cart-btn .ic{width:24px;height:24px}
   .brand-logo{height:40px}
   .brand-mark{width:auto;height:40px;max-width:140px}
   .cta-in{flex-direction:column;align-items:flex-start}
@@ -1023,3 +1030,17 @@ html[data-font="cairo"]{--f-body:'Cairo','Tajawal','Segoe UI',Tahoma,Arial,sans-
 html[data-font="almarai"]{--f-body:'Almarai','Tajawal','Segoe UI',Tahoma,Arial,sans-serif;--f-head:'Almarai','Tajawal','Segoe UI',Tahoma,Arial,sans-serif}
 html[data-font="readex"]{--f-body:'Readex Pro','Tajawal','Segoe UI',Tahoma,Arial,sans-serif;--f-head:'Readex Pro','Tajawal','Segoe UI',Tahoma,Arial,sans-serif}
 html[data-font="alexandria"]{--f-body:'Alexandria','Tajawal','Segoe UI',Tahoma,Arial,sans-serif;--f-head:'Alexandria','Tajawal','Segoe UI',Tahoma,Arial,sans-serif}
+
+/* =========================================================
+   دفعة (r): شريط خدماتنا على الهاتف · تنسيق «ريال» · أزرار السلة
+   ========================================================= */
+@media(max-width:640px){
+ .srv-strip{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-20px;padding:2px 20px 14px}
+ .srv-strip::-webkit-scrollbar{display:none}
+ .srv-strip .scard{flex:0 0 82%;scroll-snap-align:start;opacity:1;transform:none;display:flex;flex-direction:column}
+ .srv-strip .scard h3{margin-bottom:.35em}
+ .srv-strip .scard p{min-height:0}
+}
+/* الشريط الرئيسي للأسئلة: نفس حركة الأكورديون السلسة */
+.faq-all .faq-i summary{padding:15px 16px;font-size:.97rem}
+.faq-all .faq-a{padding:0 14px 16px}

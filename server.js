@@ -98,7 +98,7 @@ const ADMIN_BUILD = 27;
 app.get('/api/build', (req, res) => { res.set('Cache-Control', 'no-store'); res.json({ admin: ADMIN_BUILD }); });
 app.get('/sw.js', (req, res) => {
   res.type('application/javascript').send(`
-const C='furat-v39';
+const C='furat-v40';
 self.addEventListener('install',e=>{self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
