@@ -307,6 +307,21 @@ a{color:var(--river)}
         </div>
       </div>
       <div class="card">
+        <h3>خط الواجهة</h3>
+        <div class="grid2">
+          <label class="f"><span>خط الموقع (يشمل كل الصفحات)</span>
+            <select data-s="font">
+              <option value="tajawal">طجاول (Tajawal) — الحالي</option>
+              <option value="cairo">كايرو (Cairo)</option>
+              <option value="almarai">المراء (Almarai)</option>
+              <option value="readex">ريدكس برو (Readex Pro)</option>
+              <option value="alexandria">إسكندرية (Alexandria)</option>
+            </select>
+            <small>يُطبَّق تلقائيًا عند الحفظ</small>
+          </label>
+        </div>
+      </div>
+      <div class="card">
         <h3>البيانات النظامية والإحصاءات</h3>
         <div class="grid3">
           <label class="f"><span>السجل التجاري</span><input data-s="crNumber"><small>اتركه «—» للإخفاء</small></label>
@@ -609,6 +624,7 @@ $('#nav').addEventListener('click',e=>{const a=e.target.closest('a');if(a)tab(a.
 /* ---------- الإعدادات ---------- */
 function bindAll(){
   $('#brandName').textContent=D.settings.name||'المحل';
+  if(D.settings.font==null)D.settings.font='tajawal';
   $$('[data-s]').forEach(el=>{
     const p=el.dataset.s, v=get(D.settings,p);
     if(el.type==='checkbox')el.checked=!!v; else el.value=(v==null?'':v);

@@ -388,9 +388,47 @@
     });
   }
 
+  /* ---------- FAQ: أكورديون سلس — بديل JS للمتصفحات بدون ::details-content ---------- */
+  function initFaq() {
+    if (window.CSS && CSS.supports && CSS.supports('selector(::details-content)')) return;
+    $$('.faq-i').forEach(d => {
+      const sum = d.querySelector('summary'), panel = d.querySelector('.faq-a');
+      if (!sum || !panel) return;
+      sum.addEventListener('click', e => {
+        e.preventDefault();
+        if (d.dataset.busy) return;
+        d.dataset.busy = '1';
+        const done = () => { panel.style.height = ''; panel.style.paddingBottom = ''; panel.style.transition = ''; delete d.dataset.busy; };
+        panel.style.transition = 'height .34s var(--ease), padding-bottom .34s var(--ease)';
+        if (!d.open) {
+          d.open = true;
+          const h = panel.offsetHeight;
+          panel.style.height = '0px';
+          requestAnimationFrame(() => { panel.style.height = h + 'px'; setTimeout(done, 360); });
+        } else {
+          panel.style.height = panel.offsetHeight + 'px';
+          requestAnimationFrame(() => {
+            panel.style.height = '0px';
+            panel.style.paddingBottom = '0px';
+            setTimeout(() => { done(); d.open = false; }, 360);
+          });
+        }
+      });
+    });
+  }
+
+  /* ---------- خريطة التواصل: التفاعل يُفعَّل بالضغط حتى لا تسحب الخريطة الصفحة ---------- */
+  function initGmap() {
+    const w = $('#gmap');
+    if (!w) return;
+    const on = $('#gmapOn'), off = $('#gmapOff');
+    if (on) on.addEventListener('click', () => { w.classList.add('is-live'); if (off) off.hidden = false; });
+    if (off) off.addEventListener('click', () => { w.classList.remove('is-live'); off.hidden = true; });
+  }
+
   function initDynamic() {
     injectArt(); initReveal(); initCounters();
-    initFilters(); initForm(); initGallery(); initCardLinks();
+    initFilters(); initForm(); initGallery(); initCardLinks(); initFaq(); initGmap();
   }
   window.FH_init = initDynamic;
 

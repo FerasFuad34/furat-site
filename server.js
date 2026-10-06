@@ -94,16 +94,17 @@ app.get('/manifest.webmanifest', (req, res) => {
   });
 });
 
-const ADMIN_BUILD = 26;
+const ADMIN_BUILD = 27;
 app.get('/api/build', (req, res) => { res.set('Cache-Control', 'no-store'); res.json({ admin: ADMIN_BUILD }); });
 app.get('/sw.js', (req, res) => {
   res.type('application/javascript').send(`
-const C='furat-v38';
+const C='furat-v39';
 self.addEventListener('install',e=>{self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
   const u=new URL(e.request.url);
   if(e.request.method!=='GET') return;
+  if(u.origin!==self.location.origin) return;
   if(u.pathname.startsWith('/admin')||u.pathname.startsWith('/api')) return;
   if(u.pathname.startsWith('/assets')){
     e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(n=>{const c=n.clone();caches.open(C).then(x=>x.put(e.request,c));return n}).catch(()=>caches.match('/assets/offline.html'))));
