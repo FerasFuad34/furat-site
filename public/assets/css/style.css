@@ -136,7 +136,7 @@ html[data-theme="dark"] .brand-txt b{color:#fff}
   animation:rise var(--d) linear infinite;animation-delay:var(--delay)}
 @keyframes rise{0%{transform:translateY(0) scale(.7);opacity:0}12%{opacity:1}100%{transform:translateY(-620px) scale(1.15);opacity:0}}
 
-.hero-in{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:44px;align-items:center}
+.hero-in{position:relative;display:grid;grid-template-columns:1fr;gap:44px;align-items:center}
 .hero-copy h1{font-size:clamp(2.4rem,6vw,4.1rem);font-weight:900;margin:.28em 0 .35em;line-height:1.12}
 .hero-copy h1 em{font-style:normal;position:relative;color:var(--honey);
   background:linear-gradient(120deg,var(--honey),#fff,var(--aqua),var(--honey));background-size:300% 100%;
@@ -156,11 +156,6 @@ html[data-theme="dark"] .brand-txt b{color:#fff}
 .stars{display:inline-flex;gap:2px;color:var(--gold)}
 .stars .ic{width:16px;height:16px}
 
-.hero-art{position:relative;display:flex;justify-content:center}
-.hero-card{position:relative;width:min(420px,100%);background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);
-  border-radius:var(--r-xl);padding:22px;backdrop-filter:blur(16px);box-shadow:0 30px 70px -26px rgba(0,0,0,.7);
-  animation:tilt 9s ease-in-out infinite}
-@keyframes tilt{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-12px) rotate(.6deg)}}
 .hero-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .hero-card-top b{font-family:var(--f-head);font-size:1.3rem;letter-spacing:.08em}
 .live{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;background:rgba(61,220,132,.16);color:#8CF0BC;padding:4px 11px;border-radius:999px;font-weight:700}
@@ -259,8 +254,10 @@ html[data-theme="dark"] .pcard-media{background:#fff}
 .price b{font-family:var(--f-head);font-size:1.6rem;color:var(--abyss);line-height:1}
 html[data-theme="dark"] .price b{color:var(--aqua)}
 .price span{font-size:.8rem;color:var(--text2);font-weight:700}
-.price .cur{display:inline-block;font-size:.8rem;font-weight:700;color:var(--river);margin-inline-start:7px;line-height:1}
-.pd-price .cur{display:inline-block;font-size:.95rem;font-weight:800;color:var(--river);margin-inline-start:8px;line-height:1}
+/* دفعة (s): رمز الريال السعودي الرسمي (SVG) بدل كلمة «ريال» بجانب الأسعار */
+.cur{display:inline-block;width:.9em;height:1em;vertical-align:-.12em;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1124.14 1256.39'%3E%3Cpath fill='%23000' d='M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z'/%3E%3Cpath fill='%23000' d='M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1124.14 1256.39'%3E%3Cpath fill='%23000' d='M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z'/%3E%3Cpath fill='%23000' d='M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z'/%3E%3C/svg%3E") center/contain no-repeat}
+.price .cur{font-size:.8rem;color:var(--river);margin-inline-start:7px}
+.pd-price .cur{font-size:.95rem;color:var(--river);margin-inline-start:8px}
 .pcard-acts{display:flex;gap:6px}
 
 /* ---------- الفلاتر ---------- */
@@ -608,8 +605,6 @@ html[data-theme="dark"] .cart-total b{color:var(--honey)}
 /* ---------- استجابة ---------- */
 @media (max-width:1080px){
   .hero-in{grid-template-columns:1fr;gap:34px}
-  .hero-art{order:-1}
-  .hero-card{width:min(460px,100%)}
   .grid--3{grid-template-columns:repeat(2,1fr)}
   .grid--4{grid-template-columns:repeat(2,1fr)}
   .ftr-grid{grid-template-columns:repeat(2,1fr)}
@@ -974,15 +969,6 @@ html[data-theme="dark"] .lines3 i{background:#fff}
 }
 
 /* ---------- بطاقة الحالة بالهيرو (نمط المواقع العالمية) ---------- */
-.hc-status{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.84rem;padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#eaf7fb}
-.hc-status i{width:9px;height:9px;border-radius:50%;background:#47D6D2;animation:pulse 2s infinite}
-.hc-status.is-closed i{background:#ff8a7a;animation:none}
-.hc-hours{display:flex;align-items:center;gap:12px;margin:16px 0;padding:13px 16px;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)}
-.hc-hours .ic{width:24px;height:24px;color:#8fe3f2;flex:none}
-.hc-hours b{display:block;font-size:.78rem;opacity:.85;font-weight:700;margin-bottom:2px}
-.hc-hours i{display:block;font-style:normal;font-family:var(--f-head);font-size:1.22rem;letter-spacing:.06em;color:#fff}
-.hc-acts{display:grid;gap:9px;margin-top:4px}
-.hc-note{margin:12px 0 0;font-size:.76rem;color:#9FC4D6;text-align:center}
 /* ---------- بطاقة الموقع بتواصل (بدل المربع الفاضي) ---------- */
 .locband{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:24px 26px;border-radius:20px;background:linear-gradient(135deg,var(--abyss),#0d5d78);color:#fff;box-shadow:var(--shadow-lg)}
 .loc-ic{width:52px;height:52px;flex:none;border-radius:16px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center}
