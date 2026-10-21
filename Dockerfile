@@ -7,4 +7,5 @@ RUN apt-get update \
 WORKDIR /app
 COPY . /app
 ENV PORT=10000
-CMD php -S 0.0.0.0:${PORT} -t public_html public_html/index.php
+# بنية المستودع مسطحة: index.php في الجذر وهو راوتر + منشور في آن واحد
+CMD php -S 0.0.0.0:${PORT} -t /app /app/index.php
