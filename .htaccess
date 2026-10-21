@@ -1,0 +1,34 @@
+# ===== الفرات الحلو — إعداد Apache/LiteSpeed (Hostinger) =====
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # منع الوصول المباشر لمجلدات النظام — كل شيء يمر عبر index.php
+  RewriteRule ^(app|data|snapshot-cron\.php)(/|$)? - [F,L]
+  # الملفات الموجودة (css/js/صور) تُخدم مباشرة؛ الباقي للمسار
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 hours"
+  ExpiresByType application/javascript "access plus 1 hours"
+  ExpiresByType image/png "access plus 1 hours"
+  ExpiresByType image/jpeg "access plus 1 hours"
+  ExpiresByType image/webp "access plus 1 hours"
+  ExpiresByType image/gif "access plus 1 hours"
+  ExpiresByType image/svg+xml "access plus 1 hours"
+</IfModule>
+
+# رفع الصور حتى 15MB (يطابق حد اللوحة)
+<IfModule mod_php.c>
+  php_value upload_max_filesize 16M
+  php_value post_max_size 17M
+</IfModule>
+<IfModule lsapi_module.c>
+  php_value upload_max_filesize 16M
+  php_value post_max_size 17M
+</IfModule>

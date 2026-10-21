@@ -1,6 +1,0 @@
-node_modules
-.git
-*.bak
-server-test.log
-stats.json
-admin-auth.json

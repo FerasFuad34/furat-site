@@ -1,0 +1,9 @@
+data/data.json
+data/customers.json
+data/db-config.json
+data/stats.json
+data/login-attempts.json
+data/*.safe
+data/*.bak
+data/backups/*
+!data/backups/.gitkeep

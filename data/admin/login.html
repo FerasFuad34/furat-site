@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>دخول لوحة التحكم — الفرات الحلوة</title>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--abyss:#073B57;--river:#1478A0;--clear:#2FB6D8;--aqua:#47D6D2;--gold:#E8A33D;--honey:#F5C86B}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:'IBM Plex Sans Arabic','Tajawal','Segoe UI',Tahoma,sans-serif;
+  background:radial-gradient(120% 130% at 80% 0%,#0E5E82,#0A4665 32%,#073B57 62%,#052A40);color:#fff;padding:20px;position:relative;overflow:hidden}
+h1,h2{font-family:'Alexandria',sans-serif}
+.bg{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.2) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(80% 70% at 50% 40%,#000,transparent)}
+.card{position:relative;width:min(430px,100%);background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);border-radius:26px;padding:34px 30px;backdrop-filter:blur(16px);box-shadow:0 34px 80px -28px rgba(0,0,0,.75);text-align:center}
+.card.wide{width:min(560px,100%)}
+img.sym{width:92px;height:92px;margin:0 auto 12px;border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+h1{font-size:1.55rem;margin:0 0 4px;font-weight:700}
+p.sub{color:#B9D8E6;font-size:.92rem;margin:0 0 22px}
+label{display:block;text-align:start;font-size:.9rem;font-weight:700;color:#CFE6F1;margin-bottom:8px}
+input#pin{width:100%;padding:16px;border-radius:14px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;font-size:1.3rem;text-align:center;letter-spacing:.5em;font-family:inherit}
+input#pin::placeholder{letter-spacing:normal;font-size:.95rem;color:rgba(255,255,255,.45)}
+input#pin:focus{outline:0;border-color:var(--aqua);box-shadow:0 0 0 4px rgba(71,214,210,.2)}
+button.go{width:100%;margin-top:18px;padding:16px;border:0;border-radius:14px;cursor:pointer;font-family:'Alexandria',sans-serif;font-weight:700;font-size:1.08rem;color:#2B1B04;background:linear-gradient(135deg,var(--honey),var(--gold));box-shadow:0 14px 30px -12px rgba(232,163,61,.9);transition:.22s}
+button.go:hover{transform:translateY(-2px);filter:saturate(1.1)}
+button.go:disabled{opacity:.6;cursor:wait;transform:none}
+.err{background:rgba(224,91,76,.2);border:1px solid rgba(224,91,76,.5);color:#FFC9C1;padding:11px;border-radius:12px;font-size:.9rem;margin-bottom:16px;display:none}
+.err.on{display:block}
+.note{margin-top:20px;font-size:.8rem;color:#8FB3C6}
+a{color:var(--honey)}
+.hidden{display:none!important}
+/* شبكة الوجوه */
+.grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 4px}
+.fcell{position:relative;padding:0;border:2.5px solid rgba(255,255,255,.14);border-radius:16px;background:none;cursor:pointer;overflow:hidden;transition:.16s;aspect-ratio:1}
+.fcell img{width:100%;height:100%;display:block;object-fit:cover}
+.fcell:hover{border-color:rgba(71,214,210,.6)}
+.fcell.sel{border-color:var(--gold);box-shadow:0 0 0 4px rgba(232,163,61,.45)}
+.fcell.sel::after{content:"";position:absolute;inset:8px;border-radius:50%;border:3px solid var(--honey);pointer-events:none}
+.hintline{font-size:.85rem;color:#B9D8E6;margin:10px 0 2px}
+.shuffle{margin-top:10px;background:none;border:1.5px solid rgba(255,255,255,.22);color:#CFF0FA;border-radius:999px;padding:8px 18px;font-family:inherit;font-size:.84rem;font-weight:600;cursor:pointer}
+.shuffle:hover{border-color:var(--aqua);color:#fff}
+.sec{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);text-align:right}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="card" id="card">
+  <img class="sym" src="/assets/logo/logo-symbol.png" alt="">
+  <h1>لوحة تحكم الفرات الحلوة</h1>
+  <p class="sub" id="subTxt">أهلاً — ادخل برمزك للمتابعة</p>
+  <div class="err" id="errBox">رمز الدخول غير صحيح — تأكد منه وجرب مرة ثانية</div>
+
+  <!-- وضع الرمز / كلاهما -->
+  <div id="pinZone">
+    <form id="loginForm" autocomplete="off">
+      <label for="pin">رمز الدخول</label>
+      <input id="pin" name="pin" type="password" inputmode="numeric" placeholder="••••" autofocus required>
+      <button type="submit" class="go" id="btn">دخول</button>
+    </form>
+  </div>
+
+  <!-- وضع الوجه / كلاهما -->
+  <div id="faceZone" class="hidden">
+    <div class="grid9" id="g9"></div>
+    <p class="hintline" id="faceHint">اضغط على صورتك من بين الوجوه التسعة، ثم ادخل</p>
+    <button type="button" class="shuffle" id="btnShuffle">خلط الصور من جديد</button>
+    <button type="button" class="go" id="btnFace" disabled>دخول</button>
+  </div>
+
+  <p class="note"><a href="/">← رجوع للموقع</a></p>
+</div>
+<script>
+(function(){
+  var MODE='pin', CT='', SEL=-1, CELLS=9;
+  var err=document.getElementById('errBox'), sub=document.getElementById('subTxt');
+  var pinZone=document.getElementById('pinZone'), faceZone=document.getElementById('faceZone');
+  var g9=document.getElementById('g9'), btnFace=document.getElementById('btnFace');
+  function show(e){err.textContent=e;err.classList.add('on');setTimeout(function(){err.classList.remove('on')},6000);}
+  function done(j){ try{localStorage.setItem('fh_token',j.token);}catch(e){} location.href='/admin?tok='+encodeURIComponent(j.token); }
+  function submit(bodyJson){
+    var b=document.getElementById('btn'), bf=document.getElementById('btnFace');
+    if(b)b.disabled=true; if(bf)bf.disabled=true;
+    fetch('/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(bodyJson)})
+    .then(function(r){return r.text().then(function(t){var j={};try{j=JSON.parse(t)}catch(e){}return {ok:r.ok,j:j,st:r.status}})})
+    .then(function(res){
+      if(res.ok&&res.j.token){done(res.j);return;}
+      if(res.st===429){show('محاولات كثيرة — انتظر 10 دقائق ثم أعد المحاولة');}
+      else if(res.st===401){show(MODE==='pin'?'رمز الدخول غير صحيح':'لم تصب الخلية — جرب مرة أخرى (الصور تُخلط كل مرة)'); if(MODE!=='pin')loadGrid();}
+      else show('صار خطأ غير متوقع — حاول بعد لحظات');
+      var b2=document.getElementById('btn'); if(b2){b2.disabled=false;b2.textContent='دخول';}
+      if(bf)bf.disabled=(SEL<0);
+    })
+    .catch(function(){show('صار خطأ بالاتصال — تأكد إن السيرفر شغال وجرب مرة ثانية');
+      var b3=document.getElementById('btn'); if(b3){b3.disabled=false;b3.textContent='دخول';} if(bf)bf.disabled=(SEL<0);});
+  }
+  function renderGrid(cells){
+    g9.innerHTML='';SEL=-1;if(btnFace)btnFace.disabled=true;
+    cells.forEach(function(uri,i){
+      var b=document.createElement('button');
+      b.type='button';b.className='fcell';
+      var im=document.createElement('img');im.src=uri;im.alt='وجه '+(i+1);
+      b.appendChild(im);
+      b.addEventListener('click',function(){
+        Array.prototype.forEach.call(g9.children,function(x){x.classList.remove('sel')});
+        b.classList.add('sel');SEL=i;btnFace.disabled=false;
+      });
+      g9.appendChild(b);
+    });
+  }
+  function loadGrid(){
+    fetch('/admin/face-grid',{cache:'no-store'}).then(function(r){return r.ok?r.json():Promise.reject(r.status)})
+    .then(function(j){CT=j.t;renderGrid(j.cells);})
+    .catch(function(){show('تعذر جلب شبكة الصور');});
+  }
+  function setup(mode){
+    MODE=mode;
+    if(mode==='pin'){pinZone.classList.remove('hidden');faceZone.classList.add('hidden');sub.textContent='أهلاً — ادخل برمزك للمتابعة';}
+    else if(mode==='face'){
+      pinZone.classList.add('hidden');faceZone.classList.remove('hidden');
+      document.getElementById('card').classList.add('wide');
+      sub.textContent='كلمة المرور البصرية — اختر صورتك لتدخل';
+      if(btnFace)btnFace.textContent='دخول بصورتي';
+      loadGrid();
+    }
+    else{
+      pinZone.classList.remove('hidden');faceZone.classList.remove('hidden');
+      document.getElementById('card').classList.add('wide');
+      sub.textContent='دخول قوي — اختر صورتك واكتب الرمز معًا';
+      var p=document.querySelector('#pinZone label');if(p)p.textContent='الرمز (مطلوب مع الصورة)';
+      if(btnFace)btnFace.textContent='دخول';
+      pinZone.classList.add('sec');
+      loadGrid();
+    }
+  }
+  if(btnFace)btnFace.addEventListener('click',function(){
+    if(SEL<0)return;
+    var body={face:{t:CT,g:SEL}};
+    if(MODE==='both'){var pv=document.getElementById('pin').value.trim();if(!pv){show('اكتب رمز الدخول مع الصورة');return;}body.pin=pv;}
+    submit(body);
+  });
+  document.getElementById('btnShuffle').addEventListener('click',loadGrid);
+  document.getElementById('loginForm').addEventListener('submit',function(e){
+    e.preventDefault();err.classList.remove('on');
+    var b=document.getElementById('btn');b.disabled=true;b.textContent='جاري الدخول…';
+    if(MODE==='both'){submit({pin:document.getElementById('pin').value.trim(),face:{t:CT,g:SEL}});return;}
+    submit({pin:document.getElementById('pin').value.trim()});
+  });
+  fetch('/api/login/mode',{cache:'no-store'}).then(function(r){return r.json()})
+  .then(function(m){setup((m&&m.mode)||'pin')})
+  .catch(function(){setup('pin')});
+})();
+</script>
+</body>
+</html>
