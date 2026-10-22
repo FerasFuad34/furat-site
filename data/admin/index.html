@@ -1161,7 +1161,7 @@ const addMonths=(ds,m)=>{const d=new Date(String(ds).slice(0,10)+'T00:00:00');d.
 const daysUntil=ds=>Math.ceil((new Date(String(ds).slice(0,10)+'T00:00:00')-new Date(new Date().toDateString()))/86400000);
 const normAr=s=>String(s).replace(/[\u064B-\u0652\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/\s+/g,'');
 let duePoppedMem=false;
-const BUILD=21;
+const BUILD=27;
 (function freshCheck(){
   let last=0;
   const chk=()=>{const n=Date.now();if(n-last<60000)return;last=n;fetch('/api/build',{cache:'no-store'}).then(r=>r.json()).then(j=>{if(j.admin&&j.admin!==BUILD)location.reload();}).catch(()=>{});};

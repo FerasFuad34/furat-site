@@ -214,6 +214,13 @@ if ($PATH === '/admin' || $PATH === '/admin/') {
   readfile(FH_DATA . '/admin/index.html');
   exit;
 }
+/* نسخة تجريبية v2 — هوية مستوحاة من نظام رواد (للمقارنة قبل الاعتماد) */
+if ($PATH === '/admin/v2' || $PATH === '/admin/v2/') {
+  header('Content-Type: text/html; charset=utf-8');
+  header('Cache-Control: no-store, must-revalidate');
+  readfile(FH_DATA . '/admin/index_v2.html');
+  exit;
+}
 if ($PATH === '/admin/login' && $METHOD === 'GET') {
   header('Content-Type: text/html; charset=utf-8');
   header('Cache-Control: no-store, must-revalidate');
