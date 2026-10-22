@@ -403,6 +403,50 @@ a{color:var(--river)}
   .mm-sep{margin:8px 2px 0;font-size:.72rem;font-weight:800;color:#94a3b8;font-family:'Alexandria'}
   .mm-logout{color:#e5484d;border-color:rgba(229,72,77,.3)}
 }
+
+/* ═══ صقل v2 — مطابقة أدق لرواد (مشاهد فعليًا) ═══ */
+.cu-info{background:var(--fld-bg);border:1px solid #e3eef4;border-radius:14px;padding:10px 14px;margin-bottom:10px}
+.cu-row{display:flex;align-items:baseline;gap:7px;font-size:.86rem;padding:3.5px 0;min-width:0;flex-wrap:wrap}
+.cu-row+.cu-row{border-top:1px solid #e9f1f5}
+.cu-row i{font-style:normal;color:#94a3b8;font-weight:700;font-size:.78rem;white-space:nowrap}
+.cu-row b{color:var(--navy);font-weight:800;overflow-wrap:anywhere}
+.cu-row .mono{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:plaintext}
+.cu-row a{color:var(--primary-hov);text-decoration:none;border-bottom:1px dashed var(--primary-border)}
+.cu-row a:hover{border-bottom-style:solid}
+.cu-row .sep{color:#c3d2dc}
+.cu-row.due{margin-top:3px;background:#fff;border:1px solid var(--primary-border);border-radius:10px;padding:7px 11px}
+.cu-row.due.hot{background:#fff5f4;border-color:#f3c9c3}
+.cu-row.due.hot i,.cu-row.due.hot b{color:#b3372c}
+.cu-row-note{font-size:.8rem;color:#8a5a00;background:#fffbeb;border:1px solid #f3e3b8;border-radius:10px;padding:6px 11px;margin-bottom:9px}
+.cu-row-note.hold{color:#6d4a72;background:#f8f2fa;border-color:#e4d3e8}
+.cu-badge{clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);border-radius:5px;padding:5px 15px}
+.cu-h{align-items:flex-start}
+.cu-card{padding:14px 15px 10px}
+.cu-f{gap:8px 10px}
+.cu-f-acts{gap:8px}
+.cu-f-acts .btn{min-height:44px;border-radius:14px}
+.cu-f-acts .btn:first-child{flex:1}
+.cu-save{background:var(--primary)!important;box-shadow:0 2px 6px rgba(13,148,136,.3)!important;flex:1.4!important}
+.cu-save:hover{background:var(--primary-hov)!important}
+@media(max-width:1279px){
+  .cu-f-acts{width:100%}
+  .cu-f-acts .btn{flex:1}
+  .cu-save{flex:1.3!important}
+}
+/* الشريط السفلي: شرطة التبويب النشط كما رواد */
+.bn-b::before{content:"";position:absolute;top:0;inset-inline:28%;height:3px;border-radius:0 0 4px 4px;background:transparent;transition:background .18s}
+.bn-b.on::before{background:var(--primary)}
+/* تنبيه المتأخرات: شريط رواد الناعم بدل الأحمر الصارخ */
+#dueAlert,.alert-over{background:#fff5f4;border:1.5px solid #f3c9c3;color:#7f1d1d;border-radius:16px}
+#dueAlert b,.alert-over b{color:#b91c1c}
+/* ترويسة البطاقة: شريط الأدوات في سطر تحت العنوان */
+.cu-bar{display:grid;grid-template-columns:1fr auto;row-gap:10px;align-items:center}
+.cu-tools{grid-column:1/-1;justify-content:flex-end}
+.cu-tools #custSearch{flex:1;min-width:200px}
+/* كروت الأقسام: أزرار مربعة ناعمة مثل رواد */
+.cat-h .iconbtn{background:var(--soft);border:1px solid var(--line);border-radius:11px}
+.cat-h .iconbtn:hover{background:#fff;border-color:var(--primary-border);color:var(--primary)}
+.cat-h .iconbtn.del:hover{border-color:#f0b4ac;color:var(--bad);background:#fdecea}
 </style>
 </head>
 <body>
@@ -1358,15 +1402,15 @@ async function renderCust(){
     const due=e?`<span class="cu-due${late?' hot':''}"><i>أقرب استحقاق</i><b dir="ltr">${e.due}</b><span style="color:var(--t2)">·</span>${PART_AR[e.part]}<span style="color:var(--t2)">·</span>آخر تغيير <b dir="ltr">${e.last}</b>${late?`<span class="cu-late"><svg width="10" height="15" viewBox="0 0 12 18" aria-hidden="true"><path d="M8 0 1 10h4l-1.6 8L12 7.5H7.4z"/></svg>متأخر ${Math.abs(e.days)} يوم</span>`:''}</span>`:'';
     return `<div class="cu-card${late?' is-over':''}${hold?' is-hold':''}">
       <div class="cu-h"><b class="cu-name">${cesc(c.name)}</b>${badge}</div>
-      <div class="cu-meta">
-        <span><i>الجوال</i><a href="tel:${cesc((c.phone||'').replace(/\D/g,''))}" dir="ltr">${cesc(c.phone||'—')}</a></span>
-        <span><i>العنوان</i><em>${cesc(c.area||'—')}</em></span>
-        <span><i>الجهاز</i><em>${cesc(c.device||'—')}</em></span>
-        ${c.installDate?`<span><i>التركيب</i><em dir="ltr">${cesc(c.installDate)}</em></span>`:''}
-        ${due}
+      <div class="cu-info">
+        <div class="cu-row"><i>الجوال:</i><b class="mono"><a href="tel:${cesc((c.phone||'').replace(/\D/g,''))}" dir="ltr">${cesc(c.phone||'—')}</a></b></div>
+        <div class="cu-row"><i>العنوان:</i><b>${cesc(c.area||'—')}</b></div>
+        <div class="cu-row"><i>نوع الجهاز:</i><b>${cesc(c.device||'—')}</b></div>
+        ${c.installDate?`<div class="cu-row"><i>تاريخ التركيب:</i><b class="mono" dir="ltr">${cesc(c.installDate)}</b></div>`:''}
+        ${e?`<div class="cu-row due${late?' hot':''}"><i>${late?`أقرب استحقاق — <b style="color:#b91c1c">تأخر ${Math.abs(e.days)} يوم</b>:`:'أقرب استحقاق:'}</i><b class="mono">${e.due}</b><span class="sep">·</span><b>${PART_AR[e.part]}</b><span class="sep">·</span><i>آخر تغيير</i><b class="mono">${e.last}</b></div>`:''}
       </div>
-      ${!hold&&c.notes?`<div class="cu-note">${cesc(c.notes)}</div>`:''}
-      ${hold&&c.hold.note?`<div class="cu-note hold-n">ملاحظة التأجيل: ${cesc(c.hold.note)}</div>`:''}
+      ${!hold&&c.notes?`<div class="cu-row-note">${cesc(c.notes)}</div>`:''}
+      ${hold&&c.hold.note?`<div class="cu-row-note hold">ملاحظة التأجيل: ${cesc(c.hold.note)}</div>`:''}
       <div class="cu-f">
         <div class="cu-f-left">
           ${e?`<a class="cu-link wa" target="_blank" rel="noopener" href="${waReminder(c,e)}">تذكير واتساب</a>`:''}
