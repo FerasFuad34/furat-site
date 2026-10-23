@@ -239,10 +239,7 @@ a{color:var(--river)}
 .f input:focus,.f select:focus,.f textarea:focus{background:#fff;border-color:var(--primary);box-shadow:0 0 0 3px var(--ring)}
 .f textarea{min-height:84px;padding:12px 16px;line-height:1.5;font-weight:500;color:var(--fld-text)}
 .check input{accent-color:var(--primary)}
-#custSearch{height:46px;border-radius:999px;background:#fff;border:1px solid #d5e5ee;box-shadow:var(--sh-sm);padding:0 42px 0 16px;color:#0f172a;font-weight:600;font-size:.85rem;outline:none;transition:all .18s ease;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.4'/%3E%3Cpath d='M20 20l-3.6-3.6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 15px center;background-size:17px 17px}
-#custSearch:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(13,148,136,.12)}
+#custSearch{height:46px;border-radius:9999px;background:#fff;border:1px solid #cbd5e1;box-shadow:var(--sh-sm);padding:0 18px;color:var(--text);font-weight:600}
 #custSearch:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--ring)}
 /* ── البطاقات والشيبس ── */
 .card{border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh-sm);transition:box-shadow .2s}
@@ -495,37 +492,7 @@ a{color:var(--river)}
 .cu-badge.b-soon10{background:linear-gradient(135deg,#0ea5e9,#0284c7);box-shadow:0 2px 6px rgba(2,132,199,.3)}
 /* حياد بلا سجل */
 .cu-badge.b-none{background:#eef2f6!important;color:#5b6b7e!important;box-shadow:none!important}
-/* الحقول — هرم رواد: عادي 48/14 ناعم، نوافذ العميل 52/20 ثلجي */
-.f input,.f select,.f textarea{min-height:48px;border-radius:14px;padding:0 14px;background:var(--soft);border:1px solid var(--fld-line);color:#0f172a;font-size:.875rem;font-weight:600;transition:all .18s ease}
-.f select{padding:0 12px}
-.f textarea{min-height:80px;padding:10px 14px;line-height:1.55}
-.f>span{font-size:13px;font-weight:600}
-#mC .f input,#mC .f select,#mC .f textarea,#mMaint .f input,#mMaint .f textarea{min-height:52px;background:#f0f6fa;border:1.5px solid #d5e5ee;border-radius:20px;color:#133e54;font-size:15px;font-weight:700;padding:0 46px 0 16px;text-align:start;transition:all .18s ease}
-#mC .f select,#mMaint .f .sheet-sel{padding:0 16px}
-#mC .f textarea,#mMaint .f textarea{min-height:84px;padding:12px 46px 12px 16px;font-size:14.5px;font-weight:600;line-height:1.5;background-image:var(--fi-plain,none)!important}
-#mC .f>span,#mMaint .f>span{font-size:13.5px;font-weight:700;color:#375369;margin-bottom:6px}
-#mC .f input:focus,#mC .f textarea:focus,#mMaint .f input:focus,#mMaint .f textarea:focus{background:#fff;border-color:var(--primary);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
-#mC .f input::placeholder,#mC .f textarea::placeholder,#mMaint .f textarea::placeholder{color:#71899a;font-weight:500;font-size:14px}
-#mC .f input,#mMaint .f input{background-image:var(--fi);background-repeat:no-repeat;background-position:left 13px center;background-size:19px 19px;padding-left:50px}
-#mC .f input:not(input:first-of-type){background-image:none;padding-left:16px}
-#mC .f textarea{background-image:var(--fi);background-repeat:no-repeat;background-position:left 13px top 13px;background-size:19px 19px}
-.ic-person{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='3.4'/%3E%3Cpath d='M5 19.4c1.4-2.6 4-3.9 7-3.9s5.6 1.3 7 3.9'/%3E%3C/svg%3E")}
-.ic-phone{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linejoin='round'%3E%3Cpath d='M6.6 3.6h2.7l1.5 3.9-2 1.5a11.9 11.9 0 0 0 6.2 6.2l1.5-2 3.9 1.5v2.7c0 1.2-1 2.2-2.2 2.1C10.1 19 5 13.9 4.5 5.8a2.1 2.1 0 0 1 2.1-2.2z'/%3E%3C/svg%3E")}
-.ic-pin{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-6.5-5.6-6.5-10.3a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z'/%3E%3Ccircle cx='12' cy='10.4' r='2.3'/%3E%3C/svg%3E")}
-.ic-drop{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.2s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11z'/%3E%3C/svg%3E")}
-.ic-cal{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linecap='round'%3E%3Crect x='4' y='5.6' width='16' height='14.4' rx='3'/%3E%3Cpath d='M4 10h16M8.4 3.4v3.6M15.6 3.4v3.6'/%3E%3C/svg%3E")}
-.ic-funnel{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 5h16l-6.3 7.4V19L10.3 17v-4.6z'/%3E%3C/svg%3E")}
-.ic-pen{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19zM14.5 6.5l3 3'/%3E%3C/svg%3E")}
-/* فلاتر القوائم — 42 أبيض كرواد */
-.flt-row{display:flex;align-items:center;gap:12px;margin:8px 0 12px}
-.flt-row label.f{flex:1;margin:0}
-.flt-sum{color:var(--t2);font-size:.78rem;font-weight:600;white-space:nowrap}
-.flt-sum b{color:var(--text);font-family:'Alexandria',sans-serif}
-.flt-row select{width:100%;min-height:42px;height:42px;padding:0 12px;background:#fff;border:1px solid var(--line);border-radius:12px;color:#0f172a;font-size:13px;font-weight:600;outline:none;font-family:inherit}
-.flt-row .sheet-sel{min-height:42px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:13px;font-weight:600;color:#0f172a;padding:0 12px}
-.flt-row select:focus{border-color:var(--primary)}
-.flt-row label.f{flex:1;min-width:0;margin:0}
-.flt-row .sheet-sel{width:100%}
+
 .mm-auto{display:block;color:#94a3b8;font-size:.76rem;margin:-2px 0 6px;line-height:1.7}
 /* أزرار الجداول الحديثة */
 .btn-xs2{background:var(--soft);border:1px solid transparent;border-radius:11px;padding:7px 13px;font-size:.76rem;font-weight:700;color:#33415a;min-height:34px;transition:.14s;box-shadow:none}
@@ -561,17 +528,8 @@ a{color:var(--river)}
 .al-dot{width:8px;height:8px;border-radius:99px;background:var(--mauve);flex:none}
 .cu-badge.al-cnt-b{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 @media(max-width:1279px){
-  .modal-foot{flex-direction:column-reverse;gap:8px}
-  .modal-foot .btn{width:100%;min-height:52px;border-radius:20px;font-size:15.5px;font-weight:700}
-  .modal-foot .btn-gold{background:#bba0bf;color:#fff;border:0;box-shadow:0 2px 8px rgba(187,160,191,.3)}
-  .modal-foot .btn-gold:hover{background:#aa8eb0}
-  .modal-foot .btn-ghost{background:#e8f2f6;color:#155572;border:0}
-  .modal-foot .btn-ghost:hover{background:#d6e5ee}
-  .modal-foot .btn:active{transform:scale(.98)}
-  #mC .f .sheet-sel,#mMaint .f .sheet-sel{min-height:52px;background:#f0f6fa;border:1.5px solid #d5e5ee;border-radius:20px;color:#133e54;font-size:15px;font-weight:700;padding:0 16px}
   .bn-dot{top:4px;left:50%;right:auto;margin-left:-17px;min-width:17px;height:17px;font-size:10px;font-weight:800;border-radius:999px;padding:0 4px}
 }
-#mC input::-webkit-calendar-picker-indicator,#mMaint input::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer}
 .al-call{min-height:44px}
 
 /* ═══ جولة4: سجل الصيانة + ترتيب لابتوب ═══ */
@@ -591,16 +549,6 @@ a{color:var(--river)}
   #mMaint .modal-in .grid2,#mC .modal-in .grid2{grid-template-columns:1fr 1fr}
 }
 
-/* ═══ جولة5: نظام لابتوب عالمي (بطاقات متجاورة، قوائم عمودين) ═══ */
-@media(min-width:1280px){
-  .pane[data-p="settings"].on,.pane[data-p="dash"].on{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:15px;align-items:start}
-  .pane[data-p="settings"] .card,.pane[data-p="dash"] .card{margin:0}
-  #srvList,#faqList{display:grid;grid-template-columns:repeat(auto-fill,minmax(410px,1fr));gap:10px;align-items:start}
-  #srvList .rep,#faqList .rep{margin-bottom:0}
-  .modal-in{width:min(780px,92vw)}
-  #mP .grid2{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-  .grid2{column-gap:16px}
-}
 </style>
 </head>
 <body>
@@ -635,7 +583,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 31 — 2026-10-23</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 32 — 2026-10-23</span>
     </div>
   </aside>
 
@@ -848,6 +796,12 @@ a{color:var(--river)}
           <div class="cu-tt"><h3>العملاء والتذكيرات</h3><span class="badge b-mut" id="custCount"></span></div>
           <div class="cu-tools">
             <input id="custSearch" placeholder="ابحث بالاسم أو الجوال…" type="search">
+            <select id="custFilter" style="padding:11px 14px;border-radius:13px;border:1.5px solid #D7E2EA;background:#F8FAFC;font-family:inherit;font-size:.9rem;font-weight:600">
+              <option value="all">كل العملاء</option>
+              <option value="over">المتأخرون</option>
+              <option value="soon">خلال 30 يوم</option>
+              <option value="ok">سليمون</option>
+            </select>
             <div class="dd" id="ddExport">
               <button class="btn btn-ghost btn-sm" id="custExportBtn" type="button">تصدير<svg width="10" height="7" viewBox="0 0 10 7" aria-hidden="true" style="margin-inline-start:2px"><path d="M1 1.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
               <div class="dd-menu">
@@ -858,10 +812,7 @@ a{color:var(--river)}
             <button class="btn btn-sm" id="custAdd">+ إضافة عميل</button>
           </div>
         </div>
-        <div class="flt-row">
-          <label class="f"><select id="custFilter"><option value="all">كل العملاء</option><option value="over">المتأخرون</option><option value="soon">خلال 30 يوم</option><option value="ok">سليمون</option></select></label>
-          <span class="flt-sum">العملاء <b id="custFilterN">0</b></span>
-        </div>
+
         <div id="custCards"></div>
       </div>
       <div class="card">
@@ -882,9 +833,8 @@ a{color:var(--river)}
           <button class="btn btn-ghost btn-sm" id="alReadAll" type="button">تحديد الكل كمقروء</button>
         </div>
         <div class="al-sum" id="alSum" hidden></div>
-        <div class="flt-row">
-          <label class="f"><select id="alFilter"><option value="all">كل التنبيهات</option><option value="unread">غير مقروءة</option><option value="over">متأخرة</option><option value="hold">مؤجلة</option></select></label>
-        </div>
+        <select id="alFilter" style="padding:11px 14px;border-radius:13px;border:1.5px solid #D7E2EA;background:#F8FAFC;font-family:inherit;font-size:.9rem;font-weight:600;margin-bottom:12px;width:220px"><option value="all">كل التنبيهات</option><option value="unread">غير مقروءة</option><option value="over">متأخرة</option><option value="hold">مؤجلة</option></select>
+
         <div id="alList"></div>
       </div>
     </section>
@@ -956,16 +906,16 @@ a{color:var(--river)}
   <div class="modal-head"><h3 id="mCTitle">عميل</h3><button class="x" data-cclose>✕</button></div>
   <div class="modal-body">
     <div class="grid2">
-      <label class="f ic-person"><span>الاسم</span><input id="cName" placeholder="أبو فهد / مطعم …"></label>
-      <label class="f ic-phone"><span>الجوال</span><input id="cPhone" inputmode="numeric" placeholder="05xxxxxxxx"></label>
-      <label class="f ic-pin"><span>العنوان / الحي</span><input id="cArea" placeholder="السويدي الغربي — شارع…"></label>
-      <label class="f ic-drop"><span>نوع الجهاز / الفلتر</span><input id="cDevice" placeholder="جهاز 7 مراحل فيتنامي…"></label>
-      <label class="f ic-cal"><span>تاريخ التركيب</span><input id="cInstall" type="date"></label>
-      <label class="f ic-funnel"><span>آخر تغيير شمعات أولية</span><div style="display:flex;gap:8px"><input id="cPre" type="date" style="flex:1;min-width:0"><input id="cPreT" type="time" style="width:104px;flex:none"></div></label>
-      <label class="f ic-funnel"><span>آخر تغيير شمعة نهائية</span><div style="display:flex;gap:8px"><input id="cPost" type="date" style="flex:1;min-width:0"><input id="cPostT" type="time" style="width:104px;flex:none"></div></label>
-      <label class="f ic-funnel"><span>آخر تغيير ممبرين</span><div style="display:flex;gap:8px"><input id="cMem" type="date" style="flex:1;min-width:0"><input id="cMemT" type="time" style="width:104px;flex:none"></div></label>
+      <label class="f"><span>الاسم</span><input id="cName" placeholder="أبو فهد / مطعم …"></label>
+      <label class="f"><span>الجوال</span><input id="cPhone" inputmode="numeric" placeholder="05xxxxxxxx"></label>
+      <label class="f"><span>العنوان / الحي</span><input id="cArea" placeholder="السويدي الغربي — شارع…"></label>
+      <label class="f"><span>نوع الجهاز / الفلتر</span><input id="cDevice" placeholder="جهاز 7 مراحل فيتنامي…"></label>
+      <label class="f"><span>تاريخ التركيب</span><input id="cInstall" type="date"></label>
+      <label class="f"><span>آخر تغيير شمعات أولية</span><div style="display:flex;gap:8px"><input id="cPre" type="date" style="flex:1;min-width:0"><input id="cPreT" type="time" style="width:104px;flex:none"></div></label>
+      <label class="f"><span>آخر تغيير شمعة نهائية</span><div style="display:flex;gap:8px"><input id="cPost" type="date" style="flex:1;min-width:0"><input id="cPostT" type="time" style="width:104px;flex:none"></div></label>
+      <label class="f"><span>آخر تغيير ممبرين</span><div style="display:flex;gap:8px"><input id="cMem" type="date" style="flex:1;min-width:0"><input id="cMemT" type="time" style="width:104px;flex:none"></div></label>
     </div>
-    <label class="f ic-pen"><span>ملاحظات</span><textarea id="cNotes" rows="2" placeholder="عقد صيانة، وقت الاتصال المفضل…"></textarea></label>
+    <label class="f"><span>ملاحظات</span><textarea id="cNotes" rows="2" placeholder="عقد صيانة، وقت الاتصال المفضل…"></textarea></label>
     <div class="sv-wrap"><div class="sv-h"><h4>سجل الصيانة</h4><button type="button" class="btn btn-sm cu-save" id="cQuickMaint">تسجيل صيانة</button></div><div id="cLog"></div></div>
       </div>
   <div class="modal-foot"><button class="btn btn-ghost" data-cclose>إلغاء</button><button class="btn btn-gold" id="cSave">حفظ العميل</button></div>
@@ -983,13 +933,13 @@ a{color:var(--river)}
 <div class="modal" id="mMaint"><div class="modal-in" style="max-width:480px">
   <div class="modal-head"><h3 id="mmTitle2">تسجيل صيانة</h3><button class="x" data-mnclose>✕</button></div>
   <div class="modal-body">
-    <label class="f ic-funnel"><span>اسم الخدمة أو الصيانة</span><input id="mmSvc" placeholder="مثال: استبدال شمعات المراحل 1-2-3"></label>
+    <label class="f"><span>اسم الخدمة أو الصيانة</span><input id="mmSvc" placeholder="مثال: استبدال شمعات المراحل 1-2-3"></label>
     <div class="grid2">
-      <label class="f ic-cal"><span>تاريخ تنفيذ الخدمة</span><input type="date" id="mmDate"></label>
-      <label class="f ic-cal"><span>تاريخ التذكير القادم</span><input type="date" id="mmNext"></label>
+      <label class="f"><span>تاريخ تنفيذ الخدمة</span><input type="date" id="mmDate"></label>
+      <label class="f"><span>تاريخ التذكير القادم</span><input type="date" id="mmNext"></label>
     </div>
     <small class="mm-auto">اترك «تاريخ التذكير القادم» فارغًا ليُحسب تلقائيًا من دورة التغيير، أو حدّده يدويًا.</small>
-    <label class="f ic-pen" style="margin-top:10px"><span>ملاحظات الصيانة والخدمة</span><textarea id="mmNote" rows="3" placeholder="مثال: ضغط المضخة سليم، والتنزيل طبيعي"></textarea></label>
+    <label class="f" style="margin-top:10px"><span>ملاحظات الصيانة والخدمة</span><textarea id="mmNote" rows="3" placeholder="مثال: ضغط المضخة سليم، والتنزيل طبيعي"></textarea></label>
   </div>
   <div class="modal-foot"><button class="btn btn-ghost" data-mnclose>إلغاء</button><button class="btn btn-gold" id="mmSave">حفظ وتحديث الحالة</button></div>
 </div></div>
@@ -1980,7 +1930,6 @@ function sheetSelMount(){
     });
   });
 }
-document.addEventListener('click',e=>{const d=e.target.closest('#mC input[type=date],#mC input[type=time],#mMaint input[type=date],#mMaint input[type=time],#hUntil');if(d&&d.showPicker){try{d.showPicker()}catch(_){}}});
 if(SMQ.matches)sheetSelMount();
 if(SMQ.addEventListener)SMQ.addEventListener('change',e=>{if(e.matches){sheetSelMount();$$('select').forEach(ssSync);}});
 
