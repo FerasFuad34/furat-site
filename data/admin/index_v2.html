@@ -587,9 +587,19 @@ a{color:var(--river)}
   #custCards,#alList{display:grid;grid-template-columns:repeat(auto-fill,minmax(430px,1fr));gap:12px;align-items:start}
   #custCards>.cu-empty,#alList>.cu-empty{grid-column:1/-1}
   .cu-card,.al-card{margin-bottom:0}
-  [data-p="settings"] .f,[data-p="hours"] .f,[data-p="faqs"] .f,[data-p="services"] .f,.cat-fold .f{max-width:560px}
   #mC .modal-in,#mMaint .modal-in,#mHold .modal-in{max-width:min(640px,94vw)}
   #mMaint .modal-in .grid2,#mC .modal-in .grid2{grid-template-columns:1fr 1fr}
+}
+
+/* ═══ جولة5: نظام لابتوب عالمي (بطاقات متجاورة، قوائم عمودين) ═══ */
+@media(min-width:1280px){
+  .pane[data-p="settings"].on,.pane[data-p="dash"].on{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:15px;align-items:start}
+  .pane[data-p="settings"] .card,.pane[data-p="dash"] .card{margin:0}
+  #srvList,#faqList{display:grid;grid-template-columns:repeat(auto-fill,minmax(410px,1fr));gap:10px;align-items:start}
+  #srvList .rep,#faqList .rep{margin-bottom:0}
+  .modal-in{width:min(780px,92vw)}
+  #mP .grid2{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .grid2{column-gap:16px}
 }
 </style>
 </head>
@@ -625,7 +635,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 30 — 2026-10-23</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 31 — 2026-10-23</span>
     </div>
   </aside>
 
