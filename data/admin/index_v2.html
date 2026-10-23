@@ -507,6 +507,7 @@ a{color:var(--river)}
 #mC .f input:focus,#mC .f textarea:focus,#mMaint .f input:focus,#mMaint .f textarea:focus{background:#fff;border-color:var(--primary);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
 #mC .f input::placeholder,#mC .f textarea::placeholder,#mMaint .f textarea::placeholder{color:#71899a;font-weight:500;font-size:14px}
 #mC .f input,#mMaint .f input{background-image:var(--fi);background-repeat:no-repeat;background-position:left 13px center;background-size:19px 19px;padding-left:50px}
+#mC .f input:not(input:first-of-type){background-image:none;padding-left:16px}
 #mC .f textarea{background-image:var(--fi);background-repeat:no-repeat;background-position:left 13px top 13px;background-size:19px 19px}
 .ic-person{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='3.4'/%3E%3Cpath d='M5 19.4c1.4-2.6 4-3.9 7-3.9s5.6 1.3 7 3.9'/%3E%3C/svg%3E")}
 .ic-phone{--fi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23375369' stroke-width='1.8' stroke-linejoin='round'%3E%3Cpath d='M6.6 3.6h2.7l1.5 3.9-2 1.5a11.9 11.9 0 0 0 6.2 6.2l1.5-2 3.9 1.5v2.7c0 1.2-1 2.2-2.2 2.1C10.1 19 5 13.9 4.5 5.8a2.1 2.1 0 0 1 2.1-2.2z'/%3E%3C/svg%3E")}
@@ -572,6 +573,24 @@ a{color:var(--river)}
 }
 #mC input::-webkit-calendar-picker-indicator,#mMaint input::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer}
 .al-call{min-height:44px}
+
+/* ═══ جولة4: سجل الصيانة + ترتيب لابتوب ═══ */
+.sv-wrap{margin-top:8px}
+.sv-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.sv-h h4{margin:0;font-family:'Alexandria',sans-serif;font-size:.95rem;color:var(--navy)}
+.sv-item{display:flex;align-items:baseline;gap:9px;background:#f0f6fa;border:1.5px solid #d5e5ee;border-radius:14px;padding:9px 13px;margin-bottom:7px;font-size:.83rem}
+.sv-item b{font-family:'Alexandria',sans-serif;color:var(--primary-hov);white-space:nowrap;font-size:.78rem}
+.sv-item span{flex:1;min-width:0;font-weight:700;color:#133e54}
+.sv-item small{color:#71899a;font-weight:600;min-width:0}
+.sv-none{color:#94a3b8;font-size:.8rem;font-weight:600;padding:6px 2px}
+@media(min-width:1280px){
+  #custCards,#alList{display:grid;grid-template-columns:repeat(auto-fill,minmax(430px,1fr));gap:12px;align-items:start}
+  #custCards>.cu-empty,#alList>.cu-empty{grid-column:1/-1}
+  .cu-card,.al-card{margin-bottom:0}
+  [data-p="settings"] .f,[data-p="hours"] .f,[data-p="faqs"] .f,[data-p="services"] .f,.cat-fold .f{max-width:560px}
+  #mC .modal-in,#mMaint .modal-in,#mHold .modal-in{max-width:min(640px,94vw)}
+  #mMaint .modal-in .grid2,#mC .modal-in .grid2{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -606,7 +625,7 @@ a{color:var(--river)}
     </nav>
     <div class="side-foot">
       <a href="/" target="_blank">عرض الموقع</a>
-      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 29 — 2026-10-23</span>
+      <a href="#" id="btnLogout">تسجيل الخروج</a><span class="ver">الإصدار 30 — 2026-10-23</span>
     </div>
   </aside>
 
@@ -937,6 +956,7 @@ a{color:var(--river)}
       <label class="f ic-funnel"><span>آخر تغيير ممبرين</span><div style="display:flex;gap:8px"><input id="cMem" type="date" style="flex:1;min-width:0"><input id="cMemT" type="time" style="width:104px;flex:none"></div></label>
     </div>
     <label class="f ic-pen"><span>ملاحظات</span><textarea id="cNotes" rows="2" placeholder="عقد صيانة، وقت الاتصال المفضل…"></textarea></label>
+    <div class="sv-wrap"><div class="sv-h"><h4>سجل الصيانة</h4><button type="button" class="btn btn-sm cu-save" id="cQuickMaint">تسجيل صيانة</button></div><div id="cLog"></div></div>
       </div>
   <div class="modal-foot"><button class="btn btn-ghost" data-cclose>إلغاء</button><button class="btn btn-gold" id="cSave">حفظ العميل</button></div>
 </div></div>
@@ -1576,13 +1596,19 @@ async function renderCust(){
         </div>
         <div class="cu-f-acts">
           <button class="btn btn-ghost btn-sm" data-cedit="${c.id}">فتح ملف العميل</button>
-          <button class="btn btn-sm cu-save" data-cdone="${c.id}" data-part="${e?e.part:''}" ${e?'':'disabled style=opacity:.5'}>تسجيل صيانة</button>
+          <button class="btn btn-sm cu-save" data-cdone="${c.id}" data-part="${e?e.part:''}">تسجيل صيانة</button>
         </div>
       </div>
       </div></div>
     </div>`;
   }).join(''):`<div class="cu-empty">${rows.length?(qRaw?'لا نتائج مطابقة لـ «'+cesc(qRaw)+'»':'لا توجد نتائج مطابقة للفلتر'):'لا يوجد عملاء بعد — ابدأ بزر «إضافة عميل»'}</div>`;
   const b=$('#custBadge'); if(b)b.textContent=over?String(over):'';
+}
+function renderCustLog(c){
+  const box=document.getElementById('cLog');if(!box)return;
+  const arr=(c&&c.services)||[];
+  box.innerHTML=arr.length?arr.map(x=>`<div class="sv-item"><b dir="ltr">${x.at||''}</b><span>${cesc(x.t||'صيانة')}</span>${x.note?`<small>${cesc(x.note)}</small>`:''}</div>`).join('')
+    :'<div class="sv-none">لا صيانة مسجلة بعد — أول تسجيل يبدأ من هنا</div>';
 }
 function openCustModal(id){
   cEdit=id;
@@ -1596,10 +1622,19 @@ function openCustModal(id){
   const vp=c&&c.parts?sp(c.parts.pre):['',''], vo=c&&c.parts?sp(c.parts.post):['',''], vm=c&&c.parts?sp(c.parts.membrane):['',''];
   $('#cPre').value=vp[0]; $('#cPreT').value=vp[1]; $('#cPost').value=vo[0]; $('#cPostT').value=vo[1]; $('#cMem').value=vm[0]; $('#cMemT').value=vm[1];
   $('#cNotes').value=c?c.notes||'':'';
+  renderCustLog(c);
+  const qm=document.getElementById('cQuickMaint');if(qm){qm.style.display=id?'':'none';qm.dataset.cid=id||'';}
   const cy=(CUST&&CUST.cycles)||{pre:6,post:12,membrane:24};
 
   $('#mC').classList.add('on');
 }
+document.addEventListener('click',e=>{
+  const q=e.target.closest('#cQuickMaint');if(!q)return;
+  const c=CUST.customers.find(x=>x.id===q.dataset.cid);if(!c)return;
+  const cyc=(CUST&&CUST.cycles)||{pre:6,post:12,membrane:24};
+  const e0=custEntries(c,cyc)[0];
+  openMaint(c,e0?e0.part:'');
+});
 $$('[data-cclose]').forEach(b=>b.addEventListener('click',()=>$('#mC').classList.remove('on')));
 $('#hQuick').addEventListener('change',()=>{if($('#hQuick').value!=='custom')setHoldDate($('#hQuick').value);});
 $$('[data-hclose]').forEach(b=>b.addEventListener('click',()=>$('#mHold').classList.remove('on')));
@@ -1895,7 +1930,7 @@ $('#mmSave').addEventListener('click',async()=>{
   const e0=custEntries(c,CUST.cycles||{pre:6,post:12,membrane:24})[0];
   if(e0)c.alertRead=e0.due+'|'+e0.part;
   $('#mMaint').classList.remove('on');
-  if(await saveCust()){renderCust();showDueAlert();toast('سُجّلت الصيانة وصُفِّر العداد','ok');}
+  if(await saveCust()){renderCust();showDueAlert();if(document.getElementById('mC').classList.contains('on'))renderCustLog(c);toast('سُجّلت الصيانة وصُفِّر العداد','ok');}
 });
 
 /* ── قوائم اختيار بأسلوب رواد (شيت سفلي) بدل القائمة القديمة ── */
